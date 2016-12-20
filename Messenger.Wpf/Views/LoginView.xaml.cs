@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MvvmService.ViewModel;
 
-namespace VkMessageWpf.Views
+namespace Messenger.Wpf.Views
 {
     /// <summary>
     ///     Interaction logic for LoginView.xaml

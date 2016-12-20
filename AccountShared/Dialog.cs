@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
+using VkNet.Model;
 
 namespace VkData
 {
@@ -91,9 +92,9 @@ namespace VkData
             }
         }
 
-        public Dialog<TMessage> Empty(long offset)
+        public static Dialog<TMessage> Empty(string dialogName, long offset)
         {
-           var d = new Dialog<TMessage>
+           var d = new Dialog<TMessage>(dialogName)
            {
               Offsets =  new Dictionary<long, LinkedListNode<List<TMessage>>>(),
               All = new LinkedList<List<TMessage>>()
@@ -105,8 +106,11 @@ namespace VkData
         [JsonIgnore]
         public IEnumerable<TMessage> Projection => All.SelectMany(l => l);
 
-        public Dialog()
+        public string Name { get; }
+
+        public Dialog(string name)
         {
+            Name = name;
             _nodeCount = _nodeCountDictionary[typeof(TMessage)];
         }
 
@@ -118,6 +122,17 @@ namespace VkData
                  throw new ArgumentException($"Offset {node.Key} is alredy present in dialog");
                Append(node.Value.Value, node.Key, false);
            }
+        }
+
+        public static Dialog<Message> GetDialog(string dialogName, List<Message> toList, long offset)
+        {
+            var d = new Dialog<Message>(dialogName)
+            {
+                Offsets = new Dictionary<long, LinkedListNode<List<Message>>>(),
+                All = new LinkedList<List<Message>>()
+            };
+            d.Append(toList, offset, true);
+            return d;
         }
     }
 }

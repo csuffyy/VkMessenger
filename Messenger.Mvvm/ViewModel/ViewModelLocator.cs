@@ -12,6 +12,11 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
+using VkData.Helpers;
+using VkData.Interface;
+
 namespace MvvmService.ViewModel
 {
     /// <summary>
@@ -39,8 +44,6 @@ namespace MvvmService.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<INotificationProvider<MessageViewModel>>(
-                () => new GrowlNotifications());
 
             SimpleIoc.Default.Register<ILogger>(() => new FileLogger());
             SimpleIoc.Default.Register<ISerializer>(() => new JsonSerializer());

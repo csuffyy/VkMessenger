@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace VkMessageWpf.Views
+namespace Messenger.Wpf.Views
 {
     public static class ScrollingHelper
     {

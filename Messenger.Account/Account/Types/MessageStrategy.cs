@@ -68,7 +68,7 @@ namespace VkData.Account.Types
             var updates =
                 new KeyValuePair<string, Dialog<Message>>(dialogName, Dialog<Message>.Empty(dialogName, 0));
 
-            updates.Value.Messages[0].Add(new Message
+            updates.Value.Offsets[0].Value.Add(new Message
             {
                 Date = Convert.ToInt64(GetValue(token, 4)).ToDateTime(),
                 Body = GetValue(token, 6),

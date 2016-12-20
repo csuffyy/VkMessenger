@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using VkData;
 using VkData.Account.Categories;
 using VkData.Account.Types;
-using VkNet.Enums.Filters;
 using Application = System.Windows.Application;
-using Settings = VkMessageWpf.Properties.Settings;
 using Timer = System.Timers.Timer;
 
 namespace MvvmService.ViewModel
@@ -23,6 +22,9 @@ namespace MvvmService.ViewModel
         private string _dialogText;
         private bool _isOpenDialog;
 
+        private readonly IWPFAppSettings ApplicationSettings =
+            SimpleIoc.Default.GetInstance<IWPFAppSettings>();
+
         public Action ShowProgress;
         private string _lastLoggerMessage;
 
@@ -31,17 +33,17 @@ namespace MvvmService.ViewModel
             ShowProgress = () =>
                 ChildViewModel = new ProgressViewModel();
 
-            Settings.Default.Upgrade();
+            ApplicationSettings.Upgrade();
 
             UserSettings = new UserSettings(
-                () => Settings.Default.Password,
-                () => Settings.Default.Login,
-                () => Settings.Default.VkAppId,
+                () => ApplicationSettings.Password,
+                () => ApplicationSettings.Login,
+                () => ApplicationSettings.VkAppId,
                 () => null,
                 e => null,
-                _ => Settings.Default.Password = _,
-                _ => Settings.Default.Login = _,
-                Settings.Default.Save
+                _ => ApplicationSettings.Password = _,
+                _ => ApplicationSettings.Login = _,
+                ApplicationSettings.Save
                 );
 
             Callbacks = new VkCallbacks(
@@ -64,16 +66,18 @@ namespace MvvmService.ViewModel
                 OnAuthorizationException,
                 OnApiException);
 
-            Account = DefaultAccount;
+            Account = _defaultAccount;
             Account.Authentication.Start();
         }
 
-        private VkAccount DefaultAccount =>
-            new VkAccount(VkData.Account.Types.AppSettings.Default(), UserSettings, Callbacks, SimpleIoc.Default);
+        private VkAccount _defaultAccount =>
+            new VkAccount(PathSettings.Default(), UserSettings, Callbacks, SimpleIoc.Default);
 
         public VkCallbacks Callbacks { get; }
         public UserSettings UserSettings { get; }
         public NotificationsViewModel Notifications { get; set; }
+
+        public ICommand QuitCommand => (ChildViewModel as HomeViewModel)?.QuitCommand;
 
         public bool Authorised
         {
@@ -119,7 +123,7 @@ namespace MvvmService.ViewModel
 
         private void LogOut(bool isWriteCacheRequested)
         {
-            Settings.Default.Reset();
+            ApplicationSettings.Reset();
             DialogText = "Logged out";
             IsOpenDialog = true;
 
@@ -127,7 +131,7 @@ namespace MvvmService.ViewModel
                 Account.Storage.WriteAll();
 
             Account.Notifications.Cancel();
-            Account = new VkAccount(VkData.Account.Types.AppSettings.Default(), UserSettings, Callbacks, SimpleIoc.Default);
+            Account = new VkAccount(PathSettings.Default(), UserSettings, Callbacks, SimpleIoc.Default);
             Account.Authentication.Start();
         }
 

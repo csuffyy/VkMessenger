@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace VkMessageWpf.Views.Converters
+namespace Messenger.Wpf.Views.Converters
 {
     public class XYToPointConverter :IMultiValueConverter
     {

@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using VkData.Account.Enums;
 using VkData.Account.Interface;
 using VkData.Account.Types;
+using VkData.Helpers;
 using VkData.Interface;
 using VkNet;
 using VkNet.Model;

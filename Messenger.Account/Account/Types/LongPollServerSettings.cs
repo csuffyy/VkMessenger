@@ -1,6 +1,5 @@
 ﻿using System;
 using Newtonsoft.Json;
-using VkData.Helpers;
 using VkNet.Model;
 
 namespace VkData.Account.Types

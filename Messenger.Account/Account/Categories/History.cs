@@ -105,7 +105,7 @@ namespace VkData.Account.Categories
             var _offset = offset.ToNotNullable();
 
             if (Dictionary.ContainsKey(dialogName) 
-                && Dictionary[dialogName].Messages.ContainsKey(_offset))
+                && Dictionary[dialogName].Offsets.ContainsKey(_offset))
                 return new Result<Dialog<Message>>(Dictionary[dialogName], false);
 
             // if we have an key in a Dictionary 
@@ -123,7 +123,7 @@ namespace VkData.Account.Categories
                 Dialog<Message>.GetDialog(dialogName, history.Messages.ToList(), _offset);
 
             Account.Storage.PollServerSettings.MaxMsgId =
-                dialog.Messages[_offset].Select(m => m.Id).Max();
+                dialog.Offsets[_offset].Value.Select(m => m.Id).Max();
 
             //updates a local messages copy
              Update(dialog);

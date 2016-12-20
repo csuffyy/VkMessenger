@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using VkData;
 using VkNet.Enums.Filters;
 
@@ -13,6 +14,7 @@ namespace MvvmService.ViewModel
 {
     public class HomeViewModel : ViewModel<VkAccount, Type, ViewModelBase>
     {
+        private IWPFAppSettings ApplicationSettings = SimpleIoc.Default.GetInstance<IWPFAppSettings>();
         public HomeViewModel(VkAccount account, ICommand logOut, ICommand clearCache) : base(account)
         {
             LogOut = logOut;
@@ -52,8 +54,8 @@ namespace MvvmService.ViewModel
 
         public ICommand QuitCommand => new RelayCommand(() =>
         {
-            Settings.Default.LastDialog = VkViewModel?.LastDialog;
-            Settings.Default.Save();
+            ApplicationSettings.LastDialog = VkViewModel?.LastDialog;
+            ApplicationSettings.Save();
             Account.Storage.WriteAll();
             Application.Current.Dispatcher.Invoke(
                 Application.Current.Shutdown,

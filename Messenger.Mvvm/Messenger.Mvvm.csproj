@@ -35,6 +35,9 @@
       <HintPath>..\VkMessengerWpf\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\VkMessengerWpf\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -59,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IVkNotificationService.cs" />
+    <Compile Include="IWPFAppResources.cs" />
+    <Compile Include="IWPFAppSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ChatsViewModel.cs" />
     <Compile Include="ViewModel\DialogViewModel.cs" />
@@ -81,9 +86,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VkAccount\VkAccount\VkAccount.csproj">
-      <Project>{4f0bc612-2a0e-4d4d-948c-ff0d7645b6d6}</Project>
-      <Name>VkAccount</Name>
+    <ProjectReference Include="..\Messenger.Account\Messenger.Account.csproj">
+      <Project>{4F0BC612-2A0E-4D4D-948C-FF0D7645B6D6}</Project>
+      <Name>Messenger.Account</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

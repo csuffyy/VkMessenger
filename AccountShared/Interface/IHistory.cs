@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using VkData.Account.Types;
 using VkData.Helpers;
 using VkNet.Model;
 

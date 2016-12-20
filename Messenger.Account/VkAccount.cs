@@ -22,6 +22,7 @@ namespace VkData
         public VkAccount(IAppSettings appSettings, IUserSettings userSettings, VkCallbacks callbacks,
             IServiceLocator locator)
         {
+            Dialog<Message>.Register(20);
             AppSettings = appSettings;
             Callbacks = callbacks;
             UserSettings = userSettings;

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace VkMessageWpf.Views
+namespace Messenger.Wpf.Views
 {
     /// <summary>
     ///     Interaction logic for ProgressView.xaml

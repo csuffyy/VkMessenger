@@ -1,4 +1,4 @@
-using VkData.Account.Types;
+using VkData.Helpers;
 using VkNet.Model;
 
 namespace VkData.Interface

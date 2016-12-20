@@ -117,7 +117,7 @@ namespace VkData.Account.Categories
         public void Update(Dialog<Message> obj)
         {
             //users which are not stored in dictionary
-            var ids = obj.Messages.SelectMany(p => p.Value).Select(message => message.FromId.ToNotNullable()).ToList();
+            var ids = obj.Projection.Select(message => message.FromId.ToNotNullable()).ToList();
             var users = Account.Users.RequireNotCachedUsers(ids);
             Update(users);
         }

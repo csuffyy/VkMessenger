@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using VkData.Account.Interface;
 using VkNet.Enums.Filters;
 
@@ -12,6 +13,7 @@ namespace MvvmService.ViewModel
 {
     public abstract class VkViewModel : ViewModel<IVkAccount, string, DialogViewModel>
     {
+        private IWPFAppSettings _appSettings = SimpleIoc.Default.GetInstance<IWPFAppSettings>();
         private List<KeyValuePair<string, string>> _avatars;
 
         public List<KeyValuePair<string, string>> Avatars
@@ -54,8 +56,8 @@ namespace MvvmService.ViewModel
 
         public void SelectLastDialog()
         {
-            Settings.Default.Reload();
-            LastDialog = Settings.Default.LastDialog;
+            _appSettings.Reload();
+            LastDialog = _appSettings.LastDialog;
             if (!string.IsNullOrEmpty(LastDialog))
                 Select(LastDialog);
         }

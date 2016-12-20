@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using GalaSoft.MvvmLight.Ioc;
+using MvvmService;
+using WPFGrowlNotification;
 
-namespace VkMessageWpf.Views
+namespace Messenger.Wpf.Views
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
@@ -10,35 +12,9 @@ namespace VkMessageWpf.Views
         public View()
         {
             InitializeComponent();
-            /*
-            NIcon.DoubleClick +=
-                (sender, args) =>
-                {
-                    Show();
-                    WindowState = WindowState.Normal;
-                };*/
+            SimpleIoc.Default.Register<IWPFAppSettings, WpfAppSettings>();
+            SimpleIoc.Default.Register<IWPFAppResources, WpfAppResources>();
+            SimpleIoc.Default.Register(WindowManager.GetNotifications);
         }
-        /*
-        private NotifyIcon NIcon { get; } = new NotifyIcon
-        {
-            Icon = new Icon(@"D:\projects\C#\VkMessengerWpf\VkMessageWpf\vk.ico"),
-            Visible = false
-        };
-        */
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-           (((MainViewModel)DataContext).ChildViewModel as HomeViewModel)?
-                .QuitCommand.Execute(null);
-        }
-
-        /*
-        protected override void OnStateChanged(EventArgs e)
-        {
-            if (WindowState == WindowState.Minimized)
-                Hide();
-
-            base.OnStateChanged(e);
-        }*/
     }
 }

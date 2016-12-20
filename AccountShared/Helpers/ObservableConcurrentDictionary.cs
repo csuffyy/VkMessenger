@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
-namespace AccountShared.Helpers
+namespace VkData.Helpers
 {
     /// <summary>
     ///     Provides a thread-safe dictionary for use with data binding.

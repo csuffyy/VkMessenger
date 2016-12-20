@@ -4,11 +4,11 @@ using VkData.Interface;
 
 namespace VkData.Account.Types
 {
-    public sealed class AppSettings : IAppSettings
+    public sealed class PathSettings : IAppSettings
     {
         private string _userFolder;
 
-        public AppSettings(string appDirectory, string userFolder)
+        public PathSettings(string appDirectory, string userFolder)
         {
             BaseDirectory = appDirectory.JoinPath(userFolder);
             AppDirectory = appDirectory;
@@ -49,11 +49,11 @@ namespace VkData.Account.Types
 
         public string BaseDirectory { get; private set; }
 
-        public static AppSettings Default() => Default(DefaultUserFolder);
+        public static PathSettings Default() => Default(DefaultUserFolder);
 
-        private static AppSettings Default(string userFolder)
+        private static PathSettings Default(string userFolder)
         {
-            return new AppSettings(Environment.CurrentDirectory, userFolder)
+            return new PathSettings(Environment.CurrentDirectory, userFolder)
             {
                 PhotoExtension = ".png"
             };

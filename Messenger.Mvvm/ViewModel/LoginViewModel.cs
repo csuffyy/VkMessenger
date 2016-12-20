@@ -1,12 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
 using VkData.Account.Categories;
-using VkNet.Properties;
 
 namespace MvvmService.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
+        private readonly IWPFAppResources _appResources =
+            SimpleIoc.Default.GetInstance<IWPFAppResources>();
+
         private string _errorMessage;
         private string _login;
         private ObservableCollection<string> _recentUsers;
@@ -47,14 +50,14 @@ namespace MvvmService.ViewModel
 
             if (password.Length == 0)
             {
-                ErrorMessage = Resources.TooShortPasswordMessage;
+                ErrorMessage = _appResources.TooShortPasswordMessage;
                 return;
             }
 
             if (Service.TryAuthenticate(password, login))
                 return;
 
-            ErrorMessage = Resources.IncorrectLoginMessage;
+            ErrorMessage = _appResources.IncorrectLoginMessage;
             Login = string.Empty;
         }
     }

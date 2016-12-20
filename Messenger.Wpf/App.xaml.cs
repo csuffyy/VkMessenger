@@ -1,4 +1,4 @@
-﻿namespace VkMessageWpf
+﻿namespace Messenger.Wpf
 {
     /// <summary>
     ///     Interaction logic for App.xaml

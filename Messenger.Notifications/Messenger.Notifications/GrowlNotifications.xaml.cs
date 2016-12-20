@@ -3,14 +3,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using MvvmService;
 using MvvmService.ViewModel;
 using VkData.Interface;
 
 namespace WPFGrowlNotification
 {
     public partial class GrowlNotifications : INotificationProvider<MessageViewModel>
-    {
+    { 
         private const double TopOffset = 20;
         private const double LeftOffset = 380;
         private const byte MAX_NOTIFICATIONS = 4;

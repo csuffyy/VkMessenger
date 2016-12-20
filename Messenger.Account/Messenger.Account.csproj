@@ -89,7 +89,7 @@
     <Compile Include="Account\Categories\Storage.cs" />
     <Compile Include="Account\Categories\Users.cs" />
     <Compile Include="Account\Categories\VkNotifications.cs" />
-    <Compile Include="Account\Types\AppSettings.cs" />
+    <Compile Include="Account\Types\PathSettings.cs" />
     <Compile Include="Account\Types\Attachment.cs" />
     <Compile Include="Account\Types\HttpQuery.cs" />
     <Compile Include="Account\Types\LongPollServerSettings.cs" />

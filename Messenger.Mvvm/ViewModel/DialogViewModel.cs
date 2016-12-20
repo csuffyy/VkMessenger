@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using VkData;
 using VkData.Account.Interface;
 using VkData.Helpers;
+using VkData.Interface;
 using Application = System.Windows.Application;
 using History = VkData.Account.Categories.History;
 
@@ -144,11 +144,11 @@ namespace MvvmService.ViewModel
             var dialog =
                 Account.History.GetHistory(DialogName, offset, History.MaxMessagesCount).Value;
 
-            if (dialog.Messages.Count == 0)
+            if (dialog.Offsets[offset].Value.Count == 0)
                 dialog =
                     Account.History.GetHistory(DialogName, offset, null).Value;
 
-            var observableCollection = dialog.Messages[offset].ToViewModels(Account).ToObservable();
+            var observableCollection = dialog.Offsets[offset].Value.ToViewModels(Account).ToObservable();
             Messages = observableCollection;
             OnEnd?.Invoke();
             IsMessageInComing = true;

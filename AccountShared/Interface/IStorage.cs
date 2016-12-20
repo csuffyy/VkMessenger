@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using VkData.Account.Types;
 using VkNet.Model;
 
 namespace VkData.Interface
