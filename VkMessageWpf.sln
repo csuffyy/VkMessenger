@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Wpf", "Messenger.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AccountShared", "AccountShared\AccountShared.shproj", "{A96D47AC-218D-4FD4-B68B-A5DF5A0BFBA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Account", "Messenger.Account\VkAccount\VkAccount.csproj", "{4F0BC612-2A0E-4D4D-948C-FF0D7645B6D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Account", "Messenger.Account\Messenger.Account\VkAccount.csproj", "{4F0BC612-2A0E-4D4D-948C-FF0D7645B6D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Mvvm", "Messenger.Mvvm\Mvvm.csproj", "{2A6FB2B3-CE82-49DB-97C3-E4B43212EA21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Notifications", "Messenger.Notifications\WPFGrowlNotification\WPFGrowlNotification.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Notifications", "Messenger.Notifications\Messenger.Notifications\WPFGrowlNotification.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
