@@ -9,15 +9,21 @@ namespace VkData
 {
     public class Dialog<TMessage>
     {
-        private static Dictionary<Type, int> _nodeCountDictionary = new Dictionary<Type, int>();
-
-        public static void Register(int nodeCount)
-        {
-            _nodeCountDictionary[typeof(TMessage)] = nodeCount;
-        }
+        private static readonly Dictionary<Type, int> _nodeCountDictionary = new Dictionary<Type, int>();
+        private readonly int _nodeCount;
         private LinkedList<List<TMessage>> _all = new LinkedList<List<TMessage>>();
-        private int _nodeCount;
-        private LinkedList<List<TMessage>> All
+
+        public Dialog()
+        {
+            
+        }
+        private Dialog(string name)
+        {
+            Name = name;
+            _nodeCount = _nodeCountDictionary[typeof (TMessage)];
+        }
+
+        public LinkedList<List<TMessage>> All
         {
             get { return _all; }
             set
@@ -27,29 +33,40 @@ namespace VkData
             }
         }
 
-        public Dictionary<long, LinkedListNode<List<TMessage>>> Offsets { get; set; } = new Dictionary<long, LinkedListNode<List<TMessage>>>();
+        public Dictionary<long, LinkedListNode<List<TMessage>>> Offsets { get; set; } =
+            new Dictionary<long, LinkedListNode<List<TMessage>>>();
+
+        [JsonIgnore]
+        public IEnumerable<TMessage> Projection => All.SelectMany(l => l);
+
+        public string Name { get; }
+
+        public static void Register(int nodeCount)
+        {
+            _nodeCountDictionary[typeof (TMessage)] = nodeCount;
+        }
 
         public List<TMessage> Get(long offset)
         {
             return
                 Offsets.ContainsKey(offset)
-                ? Offsets[offset].Value
-                : new List<TMessage>();
+                    ? Offsets[offset].Value
+                    : new List<TMessage>();
         }
 
         public void Append(List<TMessage> list, long offset, bool reverse)
         {
-            if(reverse)
-               list.Reverse();
+            if (reverse)
+                list.Reverse();
             if (offset == 0)
             {
-                var firstCount = All.First.Value.Count;
-                var numAffected = list.Count / _nodeCount;
-                var extraList = list.Count - numAffected * _nodeCount;
-                if (firstCount != 0)
+                var numAffected = list.Count/_nodeCount;
+                var extraList = list.Count - numAffected*_nodeCount;
+                var first = All.First;
+                if (first != null && first.Value.Count != 0)
                 {
-                    var extraInternal = _nodeCount - firstCount;
-                    All.First.Value.AddRange(
+                    var extraInternal = _nodeCount - first.Value.Count;
+                    first.Value.AddRange(
                         list.GetRange(list.Count - extraInternal, extraInternal));
                 }
 
@@ -59,8 +76,30 @@ namespace VkData
             else
             {
                 Debug.Assert(list.Count <= _nodeCount, $"You passed an illegal list, count = {list.Count}");
-                Offsets[offset].Value = list;
+                if (Offsets.ContainsKey(offset))
+                    Offsets[offset].Value = list;
+
+                if (All.Count < offset/_nodeCount)
+                {
+                    InsertToEnd(list, offset);
+                }
+                else
+                {
+                    if (Offsets.ContainsKey(offset))
+                        Offsets[offset].Value = list;
+                    else
+                    {
+                        InsertToEnd(list, offset);
+                    }
+                }
             }
+        }
+
+        private void InsertToEnd(List<TMessage> list, long offset)
+        {
+            var linkedListNode = new LinkedListNode<List<TMessage>>(list);
+            All.AddLast(linkedListNode);
+            Offsets.Add(offset, linkedListNode);
         }
 
         private void InsertToBeginning(List<TMessage> list, int numAffected, int extraList)
@@ -69,7 +108,7 @@ namespace VkData
             {
                 All.AddFirst(
                     new LinkedListNode<List<TMessage>>(
-                        list.GetRange(i * _nodeCount, _nodeCount)));
+                        list.GetRange(i*_nodeCount, _nodeCount)));
             }
             if (extraList != 0)
             {
@@ -85,43 +124,33 @@ namespace VkData
             Offsets.Clear();
             var i = 0;
             var start = All.First;
-            while (start.Next != null)
+            while (start != null)
             {
-                Offsets.Add(i++, start);
+                Offsets.Add(i, start);
                 start = start.Next;
+                i += _nodeCount;
             }
         }
 
         public static Dialog<TMessage> Empty(string dialogName, long offset)
         {
-           var d = new Dialog<TMessage>(dialogName)
-           {
-              Offsets =  new Dictionary<long, LinkedListNode<List<TMessage>>>(),
-              All = new LinkedList<List<TMessage>>()
-           };
-           d.All.First.Value = new List<TMessage>();
+            var d = new Dialog<TMessage>(dialogName)
+            {
+                Offsets = new Dictionary<long, LinkedListNode<List<TMessage>>>(),
+                All = new LinkedList<List<TMessage>>()
+            };
+            d.All.First.Value = new List<TMessage>();
             return d;
         }
 
-        [JsonIgnore]
-        public IEnumerable<TMessage> Projection => All.SelectMany(l => l);
-
-        public string Name { get; }
-
-        public Dialog(string name)
-        {
-            Name = name;
-            _nodeCount = _nodeCountDictionary[typeof(TMessage)];
-        }
-
         public void Merge(Dialog<TMessage> dialog)
-        { 
-           foreach(var node in dialog.Offsets)
-           {
-               if(Offsets.ContainsKey(node.Key))
-                 throw new ArgumentException($"Offset {node.Key} is alredy present in dialog");
-               Append(node.Value.Value, node.Key, false);
-           }
+        {
+            foreach (var node in dialog.Offsets)
+            {
+                if (Offsets.ContainsKey(node.Key))
+                    throw new ArgumentException($"Offset {node.Key} is alredy present in dialog");
+                Append(node.Value.Value, node.Key, false);
+            }
         }
 
         public static Dialog<Message> GetDialog(string dialogName, List<Message> toList, long offset)

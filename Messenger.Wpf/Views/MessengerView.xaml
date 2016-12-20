@@ -25,17 +25,7 @@
         <Grid.ColumnDefinitions>
 
             <ColumnDefinition x:Name="ColumnDefinition" Width="*">
-                <ColumnDefinition.Style>
-                    <Style TargetType="{x:Type ColumnDefinition}">
-                        <Setter Property="Width" Value="*" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ContactsCollapsed}">
-                                <DataTrigger.Value>True</DataTrigger.Value>
-                                <Setter Property="Width" Value="0" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ColumnDefinition.Style>
+                
             </ColumnDefinition>
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
@@ -189,7 +179,7 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <ContentControl Grid.Column="0" Content="{Binding ChildViewModel}" />
+        <ContentControl Grid.Column="1" Content="{Binding ChildViewModel}" />
     </Grid>
 
 </UserControl>

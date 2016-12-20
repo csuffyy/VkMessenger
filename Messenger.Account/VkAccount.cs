@@ -22,7 +22,7 @@ namespace VkData
         public VkAccount(IAppSettings appSettings, IUserSettings userSettings, VkCallbacks callbacks,
             IServiceLocator locator)
         {
-            Dialog<Message>.Register(20);
+            Dialog<Message>.Register(VkData.Account.Categories.History.VkMessagesOffset);
             AppSettings = appSettings;
             Callbacks = callbacks;
             UserSettings = userSettings;

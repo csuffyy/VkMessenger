@@ -140,10 +140,14 @@
                 BorderThickness="0"
                 MaxLength="3000"
                 Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
-
-
-            <!--<Border Background="Red" ></Border>-->
+                TextWrapping="Wrap">
+                <TextBox.InputBindings>
+                    <KeyBinding
+                        Key="Enter"
+                        Command="{Binding SendMessage}"
+                        Modifiers="Control" />
+                </TextBox.InputBindings>
+            </TextBox>
 
             <Button
                 x:Name="SendButton"
@@ -173,22 +177,6 @@
                 Command="{Binding LoadPrevious}"
                 Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
                 <materialDesign:PackIcon HorizontalAlignment="Center" Kind="ArrowLeft" />
-            </Button>
-            <Button
-                Grid.Column="1"
-                Width="20"
-                Height="20"
-                Margin="0,0,-17,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Command="{Binding SendMessage}"
-                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
-                <materialDesign:PackIcon
-                    Width="12"
-                    Height="12"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Kind="Check" />
             </Button>
         </Grid>
     </Grid>

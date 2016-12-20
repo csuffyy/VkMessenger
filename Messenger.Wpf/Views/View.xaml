@@ -14,13 +14,10 @@
     Background="{DynamicResource MaterialDesignPaper}"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    Icon="Assets/vk-24.png"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closing">
-            <command:EventToCommand Command="{Binding QuitCommand}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

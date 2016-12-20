@@ -22,8 +22,8 @@ namespace MvvmService.ViewModel
         private string _dialogText;
         private bool _isOpenDialog;
 
-        private readonly IWPFAppSettings ApplicationSettings =
-            SimpleIoc.Default.GetInstance<IWPFAppSettings>();
+        private readonly Lazy<IWPFAppSettings> ApplicationSettings
+            = new Lazy<IWPFAppSettings>(() => SimpleIoc.Default.GetInstance<IWPFAppSettings>());
 
         public Action ShowProgress;
         private string _lastLoggerMessage;
@@ -33,17 +33,17 @@ namespace MvvmService.ViewModel
             ShowProgress = () =>
                 ChildViewModel = new ProgressViewModel();
 
-            ApplicationSettings.Upgrade();
+            ApplicationSettings.Value.Upgrade();
 
             UserSettings = new UserSettings(
-                () => ApplicationSettings.Password,
-                () => ApplicationSettings.Login,
-                () => ApplicationSettings.VkAppId,
+                () => ApplicationSettings.Value.Password,
+                () => ApplicationSettings.Value.Login,
+                () => ApplicationSettings.Value.VkAppId,
                 () => null,
                 e => null,
-                _ => ApplicationSettings.Password = _,
-                _ => ApplicationSettings.Login = _,
-                ApplicationSettings.Save
+                _ => ApplicationSettings.Value.Password = _,
+                _ => ApplicationSettings.Value.Login = _,
+                ApplicationSettings.Value.Save
                 );
 
             Callbacks = new VkCallbacks(
@@ -123,7 +123,7 @@ namespace MvvmService.ViewModel
 
         private void LogOut(bool isWriteCacheRequested)
         {
-            ApplicationSettings.Reset();
+            ApplicationSettings.Value.Reset();
             DialogText = "Logged out";
             IsOpenDialog = true;
 

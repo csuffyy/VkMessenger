@@ -14,7 +14,8 @@ namespace MvvmService.ViewModel
 {
     public class HomeViewModel : ViewModel<VkAccount, Type, ViewModelBase>
     {
-        private IWPFAppSettings ApplicationSettings = SimpleIoc.Default.GetInstance<IWPFAppSettings>();
+        private readonly Lazy<IWPFAppSettings> ApplicationSettings 
+            = new Lazy<IWPFAppSettings>(() => SimpleIoc.Default.GetInstance<IWPFAppSettings>());
         public HomeViewModel(VkAccount account, ICommand logOut, ICommand clearCache) : base(account)
         {
             LogOut = logOut;
@@ -54,8 +55,8 @@ namespace MvvmService.ViewModel
 
         public ICommand QuitCommand => new RelayCommand(() =>
         {
-            ApplicationSettings.LastDialog = VkViewModel?.LastDialog;
-            ApplicationSettings.Save();
+            ApplicationSettings.Value.LastDialog = VkViewModel?.LastDialog;
+            ApplicationSettings.Value.Save();
             Account.Storage.WriteAll();
             Application.Current.Dispatcher.Invoke(
                 Application.Current.Shutdown,

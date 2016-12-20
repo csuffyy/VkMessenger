@@ -50,12 +50,10 @@ namespace VkData.Account.Categories
 
         public void RefreshServer()
         {
-            var response = ((Func<LongPollServerResponse>)
+            Account.LongPollServer = ((Func<LongPollServerResponse>)
                 (() => Account.VkApi.Messages.GetLongPollServer(false, true))).
                 Try(Account.Logger).
                 Value;
-
-            Account.LongPollServer = response;
         }
 
         public void Update(IReadOnlyCollection<KeyValuePair<string, Dialog<Message>>> pair)
@@ -79,10 +77,8 @@ namespace VkData.Account.Categories
         public void GetUnreadHistory()
         {
             var currSettings = Account.Storage.PollServerSettings;
-           // currSettings.MaxMsgId =
-             //   MaxMsgId(Dictionary);
-            //fuck that shit
-            if (currSettings.Empty)
+
+            if (currSettings.Empty || currSettings.TsOutdated)
             {
                 currSettings = LongPollSettings;
                 Account.Storage.Write(currSettings);

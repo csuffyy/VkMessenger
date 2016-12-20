@@ -114,6 +114,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="IWPFAppResources.cs" />
     <Compile Include="Views\Converters\XYToPointConverter.cs" />
     <Compile Include="Views\DialogView.xaml.cs">
       <DependentUpon>DialogView.xaml</DependentUpon>
@@ -174,7 +175,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.config" />
+    <None Include="Views\App.config" />
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
     <None Include="Properties\Settings.settings">
@@ -183,7 +184,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Assets\vk-circle.png" />
+    <Resource Include="Views\Assets\vk-material.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Views\Assets\wechat.png" />
@@ -224,6 +225,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Assets\vk-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\Assets\vk-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
