@@ -1,0 +1,4 @@
+language: csharp
+solution: Messenger.sln
+before_script:
+  - nuget restore Messenger.sln
