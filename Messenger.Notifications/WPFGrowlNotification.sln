@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFGrowlNotification", "WPFGrowlNotification\WPFGrowlNotification.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmService", "..\MvvmService\MvvmService\MvvmService.csproj", "{233B1500-6CFA-4996-9F67-2AB5E14F872E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{233B1500-6CFA-4996-9F67-2AB5E14F872E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{233B1500-6CFA-4996-9F67-2AB5E14F872E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{233B1500-6CFA-4996-9F67-2AB5E14F872E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{233B1500-6CFA-4996-9F67-2AB5E14F872E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

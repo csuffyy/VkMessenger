@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="VkMessageWpf.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignData }">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel />
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="14.667"
+               Content="Username"
+               FontFamily="Segoe UI Light" />
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="14.667"
+               Content="Password"
+               Margin="0,31,0,0" FontFamily="Segoe UI Light" />
+        <ComboBox Grid.Row="1" x:Name="LoginBox"
+                  IsEditable="True"
+                  Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="26"
+                  Margin="10.2,4,0,0"
+                  VerticalAlignment="Top" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" FontSize="14.667"
+                  HorizontalAlignment="Left" Width="110"
+                  ItemsSource="{Binding RecentUsers}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <PasswordBox Grid.Row="1" x:Name="PasswordBox" Grid.Column="1" HorizontalAlignment="Left" Height="23"
+                     Margin="10.2,35,0,0"
+                     VerticalAlignment="Top" Width="110" BorderThickness="0,0,0,1" VerticalContentAlignment="Center"
+                     FontSize="14.667" />
+        <Button Grid.Row="1" x:Name="Login" Content="Login" Margin="50,80,50,0" Width="72" VerticalAlignment="Top"
+                Grid.ColumnSpan="2" Grid.Column="0" Click="Login_OnClick" />
+        <TextBlock Foreground="Red" FontSize="14.667" FontStyle="Italic" FontFamily="Segoe UI Light" Grid.Row="2"
+                   Grid.Column="0" Text="{Binding ErrorMessage}" Width="Auto" Height="Auto" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Grid.ColumnSpan="2" />
+    </Grid>
+</UserControl>

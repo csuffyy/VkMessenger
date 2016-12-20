@@ -1,0 +1,57 @@
+﻿<UserControl
+    x:Class="VkMessageWpf.Views.HomeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=HamburgerMenu"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MaxWidth="181.808" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <hamburgerMenu:HamburgerMenu
+            HorizontalAlignment="Left"
+            Background="LightGray"
+            MenuIconColor="White"
+            MenuItemForeground="White"
+            SelectionIndicatorColor="White">
+            <hamburgerMenu:HamburgerMenu.Content>
+
+                <hamburgerMenu:HamburgerMenuItem
+                    Icon="../Views/Assets/wechat.png"
+                    SelectionCommand="{Binding SetViewModelToChatsCommand}"
+                    Text="Chats" />
+                <hamburgerMenu:HamburgerMenuItem
+                    Icon="../Views/Assets/person.png"
+                    SelectionCommand="{Binding SetViewModelToFriendsCommand}"
+                    Text="Friends" />
+                <hamburgerMenu:HamburgerMenuItem
+                    Icon="../Views/Assets/search.png"
+                    SelectionCommand="{Binding SearchCommand}"
+                    Text="Search" />
+                <hamburgerMenu:HamburgerMenuItem
+                    Icon="../Views/Assets/keyboard-backspace.png"
+                    SelectionCommand="{Binding CollapseCommand}"
+                    Text="Collapse" />
+            </hamburgerMenu:HamburgerMenu.Content>
+        </hamburgerMenu:HamburgerMenu>
+        <ContentControl Grid.Column="1" Content="{Binding ChildViewModel}" />
+    </Grid>
+</UserControl>

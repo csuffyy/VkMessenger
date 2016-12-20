@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a96d47ac-218d-4fd4-b68b-a5df5a0bfba0</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>AccountShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AccountCallbacks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AuthenticatedEventHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AuthenticatedEventHandlerArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Dialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ActionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CacheWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConsoleLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DataProtectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Downloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EmailUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ExceptionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IEnumerableExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\JsonSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableConcurrentDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Result.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ResultExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Try.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\TryAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\TryExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IAccountService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IAuthenticationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IAuthorization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IAvatars.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IChats.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IEnumerableExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IFileService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IHistory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IJsonParseStrategy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\ILogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\INotificationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\INotifications.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\INotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IPhotos.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\ISerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\ISettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IStickers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IUsers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IUserSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NotificationArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NotificationHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PathOptions.cs" />
+  </ItemGroup>
+</Project>
