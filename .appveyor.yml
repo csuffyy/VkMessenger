@@ -1,1 +1,2 @@
-build: Messenger.sln
+build: 
+  project: Messenger.sln
