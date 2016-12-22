@@ -17,6 +17,7 @@ namespace Messenger.Wpf.Views
             SimpleIoc.Default.Register<IWPFAppResources, WpfAppResources>();
             SimpleIoc.Default.Register(WindowManager.GetNotifications);
         }
+
         public View()
         {
             InitializeComponent();
@@ -24,7 +25,7 @@ namespace Messenger.Wpf.Views
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            ((MainViewModel)DataContext).QuitCommand.Execute(null);
+            ((MainViewModel) DataContext).QuitCommand.Execute(null);
         }
     }
 }

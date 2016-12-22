@@ -19,9 +19,9 @@ namespace VkData.Account.Types
             LocalTsLastModified = DateTime.Now;
         }
 
-        public long? MaxMsgId { get;  set; }
-        public ulong? LocalPts { get;  set; }
-        public ulong LocalTs { get;  set; }
+        public long? MaxMsgId { get; set; }
+        public ulong? LocalPts { get; set; }
+        public ulong LocalTs { get; set; }
         public DateTime LocalTsLastModified { get; private set; }
 
         [JsonIgnore]
@@ -32,8 +32,8 @@ namespace VkData.Account.Types
             (LocalPts == 0 || LocalPts == null) && LocalTs == 0;
 
         /// <summary>
-        /// Creates new LongPollServerSettings from 
-        /// Vk.Net LongPollServerResponse
+        ///     Creates new LongPollServerSettings from
+        ///     Vk.Net LongPollServerResponse
         /// </summary>
         /// <param name="response"></param>
         public void FromResponse(LongPollServerResponse response)

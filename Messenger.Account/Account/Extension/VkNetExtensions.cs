@@ -11,13 +11,13 @@ namespace VkData.Account.Extension
 {
     public static class VkNetExtensions
     {
+        private const string Break = "<br>";
+        private const string Quot = "&quot";
+
         public static string GetFullName(this User user)
         {
             return $"{user.FirstName} {user.LastName}";
         }
-
-        private const string Break = "<br>";
-        private const string Quot = "&quot";
 
         public static IEnumerable<object> GetAttachments(this Message message)
             => message.Attachments.Select(a => a.Instance);
@@ -48,5 +48,18 @@ namespace VkData.Account.Extension
 
         public static string GetUrl(this int stickerId, StickerSize size)
             => $"https://vk.com/images/stickers/{stickerId}/{(int) size}.png";
+
+        public static long GetValidUserId(this Message message)
+        {
+            if (message.FromId == null
+                && message.UserId == null)
+                return message.Id.Value;
+
+            if (message.FromId == null && message.UserId != null)
+            {
+                return message.UserId.Value;
+            }
+            return message.FromId.Value;
+        }
     }
 }

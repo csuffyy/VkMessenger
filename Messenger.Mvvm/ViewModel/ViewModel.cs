@@ -5,11 +5,11 @@ namespace MvvmService.ViewModel
 {
     public abstract class ViewModel<TModel, TKey, TChildViewModel> : ViewModelBase
     {
-        private ViewModelBase _childViewModel;
-        public ViewModelBase ProgressViewModel = new ProgressViewModel();
-
         public readonly Dictionary<TKey, TChildViewModel> _cachedViewModels =
             new Dictionary<TKey, TChildViewModel>();
+
+        private ViewModelBase _childViewModel;
+        public ViewModelBase ProgressViewModel = new ProgressViewModel();
 
         protected ViewModel(TModel account)
         {
@@ -18,7 +18,6 @@ namespace MvvmService.ViewModel
 
         protected ViewModel()
         {
-
         }
 
         public ViewModelBase ChildViewModel
@@ -28,6 +27,5 @@ namespace MvvmService.ViewModel
         }
 
         protected TModel Account { get; set; }
-
     }
 }

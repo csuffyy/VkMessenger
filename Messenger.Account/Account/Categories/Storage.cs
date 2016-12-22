@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using VkData.Account.Types;
 using VkData.Helpers;
 using VkData.Interface;
@@ -11,8 +10,6 @@ namespace VkData.Account.Categories
 {
     public class Storage : IStorage<Message, LongPollServerSettings, Chat, User>
     {
-        public ILogger Logger { get; set; }
-
         public Storage(ISerializer serializer, ILogger Logger, Action refreshAccount) : this(refreshAccount)
         {
             this.Logger = Logger;
@@ -24,38 +21,6 @@ namespace VkData.Account.Categories
             RefreshAccount = refreshAccount;
         }
 
-        private void CreateMappingString()
-        {
-            _writeMappingString
-            = new Dictionary<string, Action>
-            {
-                { "chats", () => 
-                Writer.Write(Chats, "chats") },
-                {"users",
-                    () => Writer.Write(Users, "users") },
-                {"dialogNames", () => Writer.Write(DialogNames, "dialogNames")},
-                {"userIds", () => Writer.Write(UserIds, "userIds")},
-                {"chatIds", () =>  Writer.Write(ChatIds, "chatIds")},
-                {"longPollServerSettings", () => Writer.Write(PollServerSettings, "longPollServerSettings")},
-                {"history", () => Writer.WriteCollection(History, item => item.Key, "history")}
-            };
-        }
-
-        private void CreateMappingObject()
-        {
-            _writeMappingObject
-            = new Dictionary<object, Action>
-            {
-                {Chats, () => Writer.Write(Chats, "chats") },
-                {Users, () => Writer.Write(Users, "users") },
-                {DialogNames, () => Writer.Write(DialogNames, "dialogNames")},
-                {UserIds, () => Writer.Write(UserIds, "userIds")},
-                {ChatIds, () =>  Writer.Write(ChatIds, "chatIds")},
-                {PollServerSettings, () => Writer.Write(PollServerSettings, "longPollServerSettings")},
-                {History, () => Writer.WriteCollection(History, item => item.Key, "history")}
-            };
-        }
-
         public Storage(string path, ISerializer serializer, ILogger logger, Action refreshAccount)
             : this(refreshAccount)
         {
@@ -63,7 +28,11 @@ namespace VkData.Account.Categories
             Writer = new CacheWriter(path, serializer, logger);
         }
 
+        public ILogger Logger { get; set; }
+
         protected CacheWriter Writer { get; }
+        private Dictionary<object, Action> _writeMappingObject { get; set; }
+        private Dictionary<string, Action> _writeMappingString { get; set; }
         public Action RefreshAccount { get; set; }
 
         public string Path
@@ -111,10 +80,7 @@ namespace VkData.Account.Categories
         {
             var item = default(KeyValuePair<string, Dialog<Message>>);
             Parallel.Invoke(
-                () =>
-                {
-                    History = Writer.LoadCollection(item, History, "history");
-                },
+                () => { History = Writer.LoadCollection(item, History, "history"); },
                 () => UserIds = Writer.Load(UserIds, "userIds"),
                 () => Users = Writer.Load(Users, "users"),
                 () => ChatIds = Writer.Load(ChatIds, "chatIds"),
@@ -124,8 +90,6 @@ namespace VkData.Account.Categories
             CreateMappingObject();
             CreateMappingString();
         }
-        private Dictionary<object, Action> _writeMappingObject { get; set; }
-        private Dictionary<string, Action> _writeMappingString { get; set; }
 
         /*
         public void Write()
@@ -146,7 +110,8 @@ namespace VkData.Account.Categories
         }
 
         public void WriteAll()
-        {/*
+        {
+/*
             Writer.Write(DialogNames, "dialogNames");
             Writer.Write(UserIds, "userIds");
             Writer.Write(Users, "users");
@@ -156,6 +121,42 @@ namespace VkData.Account.Categories
             Writer.WriteCollection(History, item => item.Key, "history");*/
             foreach (var item in _writeMappingString)
                 item.Value();
+        }
+
+        private void CreateMappingString()
+        {
+            _writeMappingString
+                = new Dictionary<string, Action>
+                {
+                    {
+                        "chats", () =>
+                            Writer.Write(Chats, "chats")
+                    },
+                    {
+                        "users",
+                        () => Writer.Write(Users, "users")
+                    },
+                    {"dialogNames", () => Writer.Write(DialogNames, "dialogNames")},
+                    {"userIds", () => Writer.Write(UserIds, "userIds")},
+                    {"chatIds", () => Writer.Write(ChatIds, "chatIds")},
+                    {"longPollServerSettings", () => Writer.Write(PollServerSettings, "longPollServerSettings")},
+                    {"history", () => Writer.WriteCollection(History, item => item.Key, "history")}
+                };
+        }
+
+        private void CreateMappingObject()
+        {
+            _writeMappingObject
+                = new Dictionary<object, Action>
+                {
+                    {Chats, () => Writer.Write(Chats, "chats")},
+                    {Users, () => Writer.Write(Users, "users")},
+                    {DialogNames, () => Writer.Write(DialogNames, "dialogNames")},
+                    {UserIds, () => Writer.Write(UserIds, "userIds")},
+                    {ChatIds, () => Writer.Write(ChatIds, "chatIds")},
+                    {PollServerSettings, () => Writer.Write(PollServerSettings, "longPollServerSettings")},
+                    {History, () => Writer.WriteCollection(History, item => item.Key, "history")}
+                };
         }
     }
 }

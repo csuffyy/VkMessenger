@@ -1,9 +1,34 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace VkData.Helpers
 {
     public static class FileUtils
     {
+        public static bool FileLocked(string file)
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = new FileInfo(file).Open
+                (
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.None
+                );
+            }
+
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                stream?.Close();
+            }
+
+            return false;
+        }
         public static string JoinAndCreate(string directory, string fileName)
         {
             CreateIfNotExist(directory);

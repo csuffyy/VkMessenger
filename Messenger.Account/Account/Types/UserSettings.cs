@@ -6,7 +6,9 @@ namespace VkData.Account.Types
 {
     public class UserSettings : IUserSettings
     {
-        public UserSettings(Func<string> getSecurePassword, Func<string> getSecureLogin, Func<ulong> getAppId, Func<string> getSmsCode, Func<Exception, string> getCaptcha, Action<string> setPassword, Action<string> setLogin, Action saveSettings)
+        public UserSettings(Func<string> getSecurePassword, Func<string> getSecureLogin, Func<ulong> getAppId,
+            Func<string> getSmsCode, Func<Exception, string> getCaptcha, Action<string> setPassword,
+            Action<string> setLogin, Action saveSettings)
         {
             if (getAppId == null)
                 throw new ArgumentNullException(nameof(getAppId));

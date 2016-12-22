@@ -14,8 +14,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -24,9 +26,7 @@
 
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition x:Name="ColumnDefinition" Width="*">
-                
-            </ColumnDefinition>
+            <ColumnDefinition x:Name="ColumnDefinition" Width="*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -72,7 +72,8 @@
                                 Opacity="1">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
-                                        <command:EventToCommand Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchBox, Path=Text}" />
+                                        <command:EventToCommand Command="{Binding SearchCommand}"
+                                                                CommandParameter="{Binding ElementName=SearchBox, Path=Text}" />
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="KeyDown">
                                         <command:EventToCommand Command="{Binding SearchCommand}" />
@@ -113,7 +114,9 @@
                                     </Grid.ColumnDefinitions>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <command:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SelectCurrent}" CommandParameter="{Binding Key}" />
+                                            <command:EventToCommand
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SelectCurrent}"
+                                                CommandParameter="{Binding Key}" />
 
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -169,7 +172,6 @@
                                             Kind="CheckboxBlankCircle"
                                             Visibility="{Binding Online, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </StackPanel>
-
 
 
                                 </Grid>

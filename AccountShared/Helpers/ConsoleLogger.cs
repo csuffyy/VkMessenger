@@ -34,13 +34,13 @@ namespace VkData.Helpers
             Log(message);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         [DllImport("Kernel32")]
         protected static extern void AllocConsole();
 
         [DllImport("Kernel32")]
         protected static extern void FreeConsole();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName = null)
         {

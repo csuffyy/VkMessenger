@@ -7,14 +7,23 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using VkData.Account.Interface;
-using VkNet.Enums.Filters;
 
 namespace MvvmService.ViewModel
 {
     public abstract class VkViewModel : ViewModel<IVkAccount, string, DialogViewModel>
     {
-        private IWPFAppSettings _appSettings = SimpleIoc.Default.GetInstance<IWPFAppSettings>();
+        private readonly IWPFAppSettings _appSettings = SimpleIoc.Default.GetInstance<IWPFAppSettings>();
         private List<KeyValuePair<string, string>> _avatars;
+
+        private bool _canSearch;
+        private bool _contacsCollapsed;
+
+        protected VkViewModel(IVkAccount account) : base(account)
+        {
+            SetAvatars();
+            SelectCurrent = new RelayCommand<string>(Select);
+            SearchCommand = new RelayCommand<string>(Search);
+        }
 
         public List<KeyValuePair<string, string>> Avatars
         {
@@ -28,30 +37,21 @@ namespace MvvmService.ViewModel
         public bool ContacsCollapsed
         {
             get { return _contacsCollapsed; }
-            set { Set(ref _contacsCollapsed, value) ; }
+            set { Set(ref _contacsCollapsed, value); }
         }
-
-        private bool _canSearch;
-        private bool _contacsCollapsed;
 
         public bool CanSearch
         {
             get { return _canSearch; }
             set { Set(ref _canSearch, value); }
         }
+
         public string LastDialog { get; internal set; }
         public ICommand SelectCurrent { get; }
 
         private void SetAvatars()
         {
             Avatars = AvatarsImpl;
-        }
-
-        protected VkViewModel(IVkAccount account) : base(account)
-        {
-            SetAvatars();
-            SelectCurrent = new RelayCommand<string>(Select);
-            SearchCommand = new RelayCommand<string>(Search);
         }
 
         public void SelectLastDialog()
@@ -101,8 +101,6 @@ namespace MvvmService.ViewModel
                 Avatars = Avatars.Where(a =>
                     a.Key.IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
             }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-
         }
-
     }
 }

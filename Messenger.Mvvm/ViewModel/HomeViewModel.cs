@@ -8,14 +8,14 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using VkData;
-using VkNet.Enums.Filters;
 
 namespace MvvmService.ViewModel
 {
     public class HomeViewModel : ViewModel<VkAccount, Type, ViewModelBase>
     {
-        private readonly Lazy<IWPFAppSettings> ApplicationSettings 
+        private readonly Lazy<IWPFAppSettings> ApplicationSettings
             = new Lazy<IWPFAppSettings>(() => SimpleIoc.Default.GetInstance<IWPFAppSettings>());
+
         public HomeViewModel(VkAccount account, ICommand logOut, ICommand clearCache) : base(account)
         {
             LogOut = logOut;
@@ -28,10 +28,7 @@ namespace MvvmService.ViewModel
 
         public ICommand CollapseCommand
         {
-            get
-            {
-                return new RelayCommand(() => VkViewModel.ContacsCollapsed = !VkViewModel.ContacsCollapsed);
-            }
+            get { return new RelayCommand(() => VkViewModel.ContacsCollapsed = !VkViewModel.ContacsCollapsed); }
         }
 
         public ICommand SearchCommand
@@ -65,6 +62,7 @@ namespace MvvmService.ViewModel
 
         public ICommand ClearCache { get; }
         public ICommand LogOut { get; }
+
         private void SetViewModel<T>(Func<VkAccount, ViewModelBase> @new) where T : ViewModelBase
         {
             if (ChildViewModel is T)

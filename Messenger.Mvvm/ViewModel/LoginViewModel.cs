@@ -22,7 +22,7 @@ namespace MvvmService.ViewModel
         public LoginViewModel(Authentication service)
         {
             Service = service;
-            RecentUsers = new ObservableCollection<string> { };
+            RecentUsers = new ObservableCollection<string>();
         }
 
         public Authentication Service { get; set; }

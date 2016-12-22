@@ -10,17 +10,20 @@ using VkData.Account.Types;
 using VkData.Helpers;
 using VkData.Interface;
 using VkNet;
+using VkNet.Enums.Filters;
 using VkNet.Exception;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
+using PhotoSize = VkData.Account.Enums.PhotoSize;
 using Timer = System.Timers.Timer;
 
 namespace VkData.Account.Categories
 {
     public class Authorization :
         AccountService
-            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, Enums.PhotoSize>,
+            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo,
+                StickerSize, PhotoSize>,
         IAuthorization
     {
         public Authorization(IVkAccount Account) : base(Account)
@@ -75,7 +78,7 @@ namespace VkData.Account.Categories
             Action onApiException,
             Action<Exception> onAuthorizationException)
         {
-            @params.Settings = VkNet.Enums.Filters.Settings.All;
+            @params.Settings = Settings.All;
             try
             {
                 Account.VkApi.Authorize(@params);
@@ -114,7 +117,7 @@ namespace VkData.Account.Categories
             Account.RaiseUserAuthorized();
         }
 
-        public Image GetCaptcha(CaptchaNeededException e)
-            => new Bitmap(Account.Downloader.DownloadAsync(e.Img, Path.GetTempFileName()));
+        public async Task<Image> GetCaptcha(CaptchaNeededException e)
+            => new Bitmap(await Account.Downloader.DownloadAsync(e.Img, Path.GetTempFileName()));
     }
 }

@@ -15,7 +15,7 @@ using VkNet.Model.Attachments;
 
 namespace VkData.Account.Types
 {
-    public class MessageStrategy : IJsonParseStrategy< IVkAccount, JToken>
+    public class MessageStrategy : IJsonParseStrategy<IVkAccount, JToken>
     {
         private readonly Dictionary<string, Func<IVkAccount, JToken, string, object>> AttachmentFactories = new Dictionary
             <string, Func<IVkAccount, JToken, string, object>>
@@ -59,7 +59,7 @@ namespace VkData.Account.Types
 
             var fromId = VkNotifications.ParseFlags(2, 1, GetValue(token, 2)) != 1
                 ? dialogOwnerId
-                : Account.VkApi.UserId.ToNotNullable();
+                : Account.VkApi.UserId.Value;
 
             if (Chats.IsChatId(dialogOwnerId))
                 fromId = Convert.ToInt64(GetValue(token, "from"));
@@ -91,6 +91,5 @@ namespace VkData.Account.Types
         }
 
         private bool CheckToken(JToken token) => attachmentMatchRegex.IsMatch(((JProperty) token).Name);
-
     }
 }

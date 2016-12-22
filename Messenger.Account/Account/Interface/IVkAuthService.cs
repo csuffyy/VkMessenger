@@ -5,12 +5,14 @@ using VkNet;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
+using PhotoSize = VkData.Account.Enums.PhotoSize;
 
 namespace VkData.Account.Interface
 {
     public interface IVkAuthService :
         IAuthenticationService
-            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, Enums.PhotoSize>
+            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo,
+                StickerSize, PhotoSize>
     {
     }
 }

@@ -22,22 +22,22 @@ namespace VkData
         public VkAccount(IAppSettings appSettings, IUserSettings userSettings, VkCallbacks callbacks,
             IServiceLocator locator)
         {
-            Dialog<Message>.Register(VkData.Account.Categories.History.VkMessagesOffset);
+            Dialog<Message>.Register(Account.Categories.History.VkMessagesOffset);
             AppSettings = appSettings;
             Callbacks = callbacks;
             UserSettings = userSettings;
 
             VkApi = new VkApi();
 
-            Logger = ((Func<ILogger>)(() =>
-           {
-               var logger = locator.GetInstance<ILogger>();
-               logger.Path = AppSettings.LogPath;
-               return logger;
-           })).
+            Logger = ((Func<ILogger>) (() =>
+            {
+                var logger = locator.GetInstance<ILogger>();
+                logger.Path = AppSettings.LogPath;
+                return logger;
+            })).
                 TryOr(e => new FileLogger(AppSettings.LogPath)).Value;
 
-            var serialiser = ((Func<ISerializer>)(locator.GetInstance<ISerializer>)).
+            var serialiser = ((Func<ISerializer>) (locator.GetInstance<ISerializer>)).
                 TryOr(e => new JsonSerializer()).Value;
 
             Storage = new Storage(appSettings.StoragePath,
@@ -103,13 +103,17 @@ namespace VkData
             remove { Notifications.Notifications.CollectionChanged -= value; }
         }
 
-        
+
         public void RaiseUserAuthorized()
         {
             Authorized?.Invoke();
         }
 
-        public AccountCallbacks<Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, PhotoSize> Callbacks { get; }
+        public
+            AccountCallbacks
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, StickerSize, PhotoSize> Callbacks { get; }
+
         public VkApi VkApi { get; }
         public CancellationTokenSource CancellationTokenSource { get; }
         public LongPollServerResponse LongPollServer { get; set; }
@@ -125,15 +129,14 @@ namespace VkData
 
         public
             IHistory
-               <Message, LongPollServerSettings>
-            History
-        { get; }
+                <Message, LongPollServerSettings>
+            History { get; }
 
         public
             IAuthenticationService
-                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, PhotoSize>
-            Authentication
-        { get; }
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, StickerSize, PhotoSize>
+            Authentication { get; }
 
         public IChats<Chat> Chats { get; }
         public IUsers<Message, User> Users { get; }

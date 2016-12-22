@@ -4,7 +4,7 @@ using VkNet.Model;
 
 namespace VkData.Interface
 {
-    public interface IHistory<TMessage, TPollSettings> 
+    public interface IHistory<TMessage, TPollSettings>
     {
         Dictionary<string, Dialog<Message>> Dictionary { get; set; }
         TPollSettings LongPollSettings { get; }

@@ -5,9 +5,9 @@ namespace Messenger.Wpf.Views
     /// <summary>
     ///     Interaction logic for ConversationControl.xaml
     /// </summary>
-    public partial class ConversationControl : UserControl
+    public partial class DialogControl : UserControl
     {
-        public ConversationControl()
+        public DialogControl()
         {
             InitializeComponent();
         }

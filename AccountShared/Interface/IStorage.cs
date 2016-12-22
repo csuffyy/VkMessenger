@@ -18,13 +18,15 @@ namespace VkData.Interface
         void ClearAll();
         void LoadAll();
         void WriteAll();
+
         /// <summary>
-        /// If property is present in storage it's being saved.
+        ///     If property is present in storage it's being saved.
         /// </summary>
         /// <param name="propertyName"></param>
         void Write(string propertyName);
+
         /// <summary>
-        /// If passed object is present in storage it's being saved.
+        ///     If passed object is present in storage it's being saved.
         /// </summary>
         /// <param name="property">passed object</param>
         void Write(object property);

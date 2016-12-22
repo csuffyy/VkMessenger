@@ -10,17 +10,17 @@ namespace VkData
     public class Dialog<TMessage>
     {
         private static readonly Dictionary<Type, int> _nodeCountDictionary = new Dictionary<Type, int>();
-        private readonly int _nodeCount;
+        private readonly int _nodeCount = 20;
         private LinkedList<List<TMessage>> _all = new LinkedList<List<TMessage>>();
 
         public Dialog()
         {
-            
         }
+
         private Dialog(string name)
         {
             Name = name;
-            _nodeCount = _nodeCountDictionary[typeof (TMessage)];
+            _nodeCount = _nodeCountDictionary[typeof(TMessage)];
         }
 
         public LinkedList<List<TMessage>> All
@@ -43,7 +43,7 @@ namespace VkData
 
         public static void Register(int nodeCount)
         {
-            _nodeCountDictionary[typeof (TMessage)] = nodeCount;
+            _nodeCountDictionary[typeof(TMessage)] = nodeCount;
         }
 
         public List<TMessage> Get(long offset)
@@ -60,14 +60,21 @@ namespace VkData
                 list.Reverse();
             if (offset == 0)
             {
-                var numAffected = list.Count/_nodeCount;
-                var extraList = list.Count - numAffected*_nodeCount;
+                var numAffected = list.Count / _nodeCount;
+                var extraList = list.Count - numAffected * _nodeCount;
                 var first = All.First;
                 if (first != null && first.Value.Count != 0)
                 {
                     var extraInternal = _nodeCount - first.Value.Count;
-                    first.Value.AddRange(
-                        list.GetRange(list.Count - extraInternal, extraInternal));
+                    if (extraInternal < list.Count)
+                    {
+                        first.Value.AddRange(
+                            list.GetRange(list.Count - extraInternal, extraInternal));
+                    }
+                    else
+                    {
+                        first.Value.AddRange(list);
+                    }
                 }
 
                 InsertToBeginning(list, numAffected, extraList);
@@ -79,7 +86,7 @@ namespace VkData
                 if (Offsets.ContainsKey(offset))
                     Offsets[offset].Value = list;
 
-                if (All.Count < offset/_nodeCount)
+                if (All.Count < offset / _nodeCount)
                 {
                     InsertToEnd(list, offset);
                 }
@@ -108,7 +115,7 @@ namespace VkData
             {
                 All.AddFirst(
                     new LinkedListNode<List<TMessage>>(
-                        list.GetRange(i*_nodeCount, _nodeCount)));
+                        list.GetRange(i * _nodeCount, _nodeCount)));
             }
             if (extraList != 0)
             {
@@ -139,7 +146,9 @@ namespace VkData
                 Offsets = new Dictionary<long, LinkedListNode<List<TMessage>>>(),
                 All = new LinkedList<List<TMessage>>()
             };
-            d.All.First.Value = new List<TMessage>();
+            var linkedListNode = new LinkedListNode<List<TMessage>>(new List<TMessage>());
+            d.All.AddFirst(linkedListNode);
+            d.Offsets.Add(offset, linkedListNode);
             return d;
         }
 
@@ -148,7 +157,7 @@ namespace VkData
             foreach (var node in dialog.Offsets)
             {
                 if (Offsets.ContainsKey(node.Key))
-                    throw new ArgumentException($"Offset {node.Key} is alredy present in dialog");
+                    Offsets[node.Key].Value = node.Value.Value;
                 Append(node.Value.Value, node.Key, false);
             }
         }

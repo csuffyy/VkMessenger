@@ -3,14 +3,14 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using VkData.Account.Categories;
 using VkData.Account.Interface;
 using VkData.Helpers;
 using VkData.Interface;
-using Application = System.Windows.Application;
-using History = VkData.Account.Categories.History;
 
 namespace MvvmService.ViewModel
 {
@@ -23,10 +23,11 @@ namespace MvvmService.ViewModel
 
         private ObservableCollection<MessageViewModel> _messages;
         private int _messagesGetOffset;
+
         /// <summary>
-        /// Creates a new instance of DialogViewModel.
-        /// Multiline comment below should be removed in release.
-        /// Currently it's used for debugging.
+        ///     Creates a new instance of DialogViewModel.
+        ///     Multiline comment below should be removed in release.
+        ///     Currently it's used for debugging.
         /// </summary>
         /// <param name="account">IVkAccount instance</param>
         /// <param name="dialogName">Dialog name</param>
@@ -36,7 +37,7 @@ namespace MvvmService.ViewModel
             Account = account;
             DialogName = dialogName;
             ShowProgess = showProgess;
-    
+
             NotificationService = new VkNotificationService(account, vm =>
             {
                 /*if (vm.ImageUrl == Account.Avatars.FriendsDictionary[Account.Users.Current])
@@ -124,7 +125,7 @@ namespace MvvmService.ViewModel
             });
         });
 
-        public ICommand ShowPhotoInViewer => new RelayCommand<string>(s => Process.Start((string) s));
+        public ICommand ShowPhotoInViewer => new RelayCommand<string>(s => Process.Start(s));
 
         public Action OnEnd { get; set; }
 
@@ -134,7 +135,7 @@ namespace MvvmService.ViewModel
             await
                 Task.Factory.StartNew(
                     () => Update(offset),
-                    CancellationToken.None, 
+                    CancellationToken.None,
                     TaskCreationOptions.LongRunning,
                     TaskScheduler.Default);
         }
@@ -142,7 +143,7 @@ namespace MvvmService.ViewModel
         private void Update(long offset)
         {
             var dialog =
-                Account.History.GetHistory(DialogName, offset, History.MaxMessagesCount).Value;
+                Account.History.GetHistory(DialogName, offset, History.MaxMessagesLimit).Value;
 
             if (dialog.Offsets[offset].Value.Count == 0)
                 dialog =

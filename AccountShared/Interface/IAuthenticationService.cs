@@ -1,7 +1,10 @@
 namespace VkData.Interface
 {
-    public interface IAuthenticationService<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto,  TStickerSize,  TPhotoSize> :
-        IAccountService<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto, TStickerSize ,TPhotoSize>
+    public interface IAuthenticationService<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams,
+        TPhoto, TStickerSize, TPhotoSize> :
+            IAccountService
+                <TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto, TStickerSize,
+                    TPhotoSize>
     {
         IUserSettings UserSettings { get; set; }
         bool TryAuthenticate(string password, string login);

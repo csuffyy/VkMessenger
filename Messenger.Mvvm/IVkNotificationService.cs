@@ -10,8 +10,8 @@ using PhotoSize = VkData.Account.Enums.PhotoSize;
 namespace MvvmService
 {
     public interface IVkNotificationService : INotificationService
-        <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, PhotoSize>
+        <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo,
+            StickerSize, PhotoSize>
     {
-        
     }
 }

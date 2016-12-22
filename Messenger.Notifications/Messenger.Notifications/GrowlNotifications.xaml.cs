@@ -9,7 +9,7 @@ using VkData.Interface;
 namespace WPFGrowlNotification
 {
     public partial class GrowlNotifications : INotificationProvider<MessageViewModel>
-    { 
+    {
         private const double TopOffset = 20;
         private const double LeftOffset = 380;
         private const byte MAX_NOTIFICATIONS = 4;

@@ -62,6 +62,12 @@ namespace VkData.Helpers
             }
         }
 
+
+        public TSource Load<TSource>(string subPath) where TSource : new()
+        {
+            return Load((TSource)(object)null, subPath);
+        }
+
         public TSource Load<TSource>(TSource item, string subPath) where TSource : new()
         {
             var filePath = FileUtils.JoinAndCreate(Path, subPath);
@@ -78,7 +84,7 @@ namespace VkData.Helpers
             var deserializedObject =
                 new Try<TSource>(
                     () => Serializer.DeserializeObject<TSource>(content),
-                    _ => Delete(subPath), 
+                    _ => Delete(subPath),
                     Logger);
 
             var value = deserializedObject.Result.Value;

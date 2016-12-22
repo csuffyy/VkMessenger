@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using VkNet.Model;
 
 namespace VkData.Interface
 {
-    public interface IUsers<TMessage, TUser> 
+    public interface IUsers<TMessage, TUser>
     {
         string Current { get; }
         Dictionary<string, TUser> Friends { get; }
@@ -14,5 +15,6 @@ namespace VkData.Interface
         IEnumerable<TUser> RequireNotCachedUsers(IEnumerable<long> userIds);
         string GetFullUserName(long userId);
         string GetFullUserName(TMessage message);
+        bool FromCurrent(Message message);
     }
 }

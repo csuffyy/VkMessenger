@@ -8,6 +8,6 @@ namespace WPFGrowlNotification
         public static INotificationProvider<MessageViewModel> GetNotifications()
         {
             return new GrowlNotifications();
-        } 
+        }
     }
 }

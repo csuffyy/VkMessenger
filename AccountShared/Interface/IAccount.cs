@@ -7,9 +7,13 @@ using VkData.Helpers;
 
 namespace VkData.Interface
 {
-    public interface IAccount<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto,  TPhotoSize,  TStickerSize> 
+    public interface IAccount<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto,
+        TPhotoSize, TStickerSize>
     {
-        AccountCallbacks<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto, TStickerSize, TPhotoSize> Callbacks { get; }
+        AccountCallbacks
+            <TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto, TStickerSize, TPhotoSize
+                > Callbacks { get; }
+
         TApi VkApi { get; }
         CancellationTokenSource CancellationTokenSource { get; }
         TResponse LongPollServer { get; set; }
@@ -23,8 +27,9 @@ namespace VkData.Interface
         IStorage<TMessage, TPollSettings, TChat, TUser> Storage { get; }
         IHistory<TMessage, TPollSettings> History { get; }
 
-        IAuthenticationService<TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto, TStickerSize, TPhotoSize> Authentication
-        { get; }
+        IAuthenticationService
+            <TMessage, TUser, TResponse, TApi, TPollSettings, TChat, TGetHistoryParams, TPhoto, TStickerSize, TPhotoSize
+                > Authentication { get; }
 
         IChats<TChat> Chats { get; }
         IUsers<TMessage, TUser> Users { get; }

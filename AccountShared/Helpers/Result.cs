@@ -2,7 +2,7 @@
 
 namespace VkData.Helpers
 {
-    public class Result 
+    public class Result
     {
         public Result(bool success)
         {
@@ -59,7 +59,7 @@ namespace VkData.Helpers
         private Result<T> OnConditionFunc(Func<T> onConditionFunc, bool condition, int millisecondsDelay = 0)
         {
             if (!condition) return this;
-            Value = onConditionFunc.Delayed<T>(millisecondsDelay).Invoke();
+            Value = onConditionFunc.Delayed(millisecondsDelay).Invoke();
             return this;
         }
 

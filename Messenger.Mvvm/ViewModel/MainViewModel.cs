@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -8,7 +9,6 @@ using GalaSoft.MvvmLight.Ioc;
 using VkData;
 using VkData.Account.Categories;
 using VkData.Account.Types;
-using Application = System.Windows.Application;
 using Timer = System.Timers.Timer;
 
 namespace MvvmService.ViewModel
@@ -18,15 +18,15 @@ namespace MvvmService.ViewModel
     /// </para>
     public class MainViewModel : ViewModel<VkAccount, string, ViewModelBase>
     {
-        private bool _authorised;
-        private string _dialogText;
-        private bool _isOpenDialog;
-
         private readonly Lazy<IWPFAppSettings> ApplicationSettings
             = new Lazy<IWPFAppSettings>(() => SimpleIoc.Default.GetInstance<IWPFAppSettings>());
 
-        public Action ShowProgress;
+        private bool _authorised;
+        private string _dialogText;
+        private bool _isOpenDialog;
         private string _lastLoggerMessage;
+
+        public Action ShowProgress;
 
         public MainViewModel()
         {
@@ -97,8 +97,8 @@ namespace MvvmService.ViewModel
                 Account.Storage.ClearAll();
                 ChildViewModel = new HomeViewModel(Account, LogOutCommand, ClearCache);
             }, CancellationToken.None,
-               TaskCreationOptions.LongRunning,
-               TaskScheduler.Default);
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default);
 
             Account.Logger.PropertyChanged += (s, e) => LastLoggerMessage = Account.Logger.LastLoggerMessage;
         });
@@ -118,7 +118,7 @@ namespace MvvmService.ViewModel
         public string LastLoggerMessage
         {
             get { return _lastLoggerMessage; }
-            set { Set(ref _lastLoggerMessage ,value); }
+            set { Set(ref _lastLoggerMessage, value); }
         }
 
         private void LogOut(bool isWriteCacheRequested)

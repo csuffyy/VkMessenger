@@ -18,13 +18,13 @@ using PhotoSize = VkData.Account.Enums.PhotoSize;
 namespace MvvmService
 {
     public class VkNotificationService :
-       IVkNotificationService
+        IVkNotificationService
     {
         private readonly Action<MessageViewModel> _doAdd;
 
         public VkNotificationService(IVkAccount account, bool executeLast)
         {
-            Account = account ;
+            Account = account;
             ExecuteLast = executeLast;
         }
 
@@ -45,7 +45,8 @@ namespace MvvmService
 
         public
             IAccount
-                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, PhotoSize, StickerSize>
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, PhotoSize, StickerSize>
             Account { get; }
 
         public void StartTracking()
@@ -58,9 +59,9 @@ namespace MvvmService
             Account.ReceivedNotification -= OnReceived;
         }
 
-        private void OnReceived(object sender, NotifyCollectionChangedEventArgs notificationArgs)
+        private async void OnReceived(object sender, NotifyCollectionChangedEventArgs notificationArgs)
         {
-            var items = (ObservableConcurrentDictionary<string, Dialog<Message>>)sender;
+            var items = (ObservableConcurrentDictionary<string, Dialog<Message>>) sender;
             var _items = items.SelectMany(item => item.Value.Projection);
 
             foreach (var message in _items)
@@ -69,8 +70,8 @@ namespace MvvmService
                     return;
 
                 var attachments = message.GetAttachments().ToList();
-                var list = 
-                      Account.Photos.GetPathByAttachments(attachments, PhotoSize.Photo130);
+                var list =
+                    await Account.Photos.GetPathByAttachments(attachments, PhotoSize.Photo130);
                 var sticker = Account.Stickers.Get(attachments, StickerSize.Photo64);
 
                 var notification = new MessageViewModel(Account, message);

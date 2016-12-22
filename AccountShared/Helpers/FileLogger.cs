@@ -53,10 +53,13 @@ namespace VkData.Helpers
         public void Log(Exception e)
             => Log(e.Message, e.GetInnerExceptions(), StackTrace);
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void Log(string message, string innerException, string method)
         {
             if (!Enabled) return;
-            var _message = $"\nWhen: {DateTime.Now.ToShortTimeString()}\n\nMessage: {message}\nFrom: {method}\n{innerException}\n\n";
+            var _message =
+                $"\nWhen: {DateTime.Now.ToShortTimeString()}\n\nMessage: {message}\nFrom: {method}\n{innerException}\n\n";
 
             LastLoggerMessage = _message;
             OnPropertyChanged(nameof(LastLoggerMessage));
@@ -67,8 +70,6 @@ namespace VkData.Helpers
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

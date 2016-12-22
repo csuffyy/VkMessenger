@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VkData.Account.Enums;
 using VkData.Account.Extension;
+using VkData.Account.Interface;
 using VkData.Account.Types;
 using VkData.Helpers;
 using VkData.Interface;
@@ -16,8 +17,7 @@ using PhotoSize = VkData.Account.Enums.PhotoSize;
 namespace VkData.Account.Categories
 {
     public class Users :
-        AccountService
-            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, PhotoSize>,
+        AccountService<Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, PhotoSize>,
         IUsers<Message, User>
     {
         public Users(VkAccount Account) : base(Account)
@@ -26,14 +26,14 @@ namespace VkData.Account.Categories
 
         private User CurrentUser =>
             ((Func<User>) (
-                () => Account.VkApi.Users.Get(Account.VkApi.UserId.ToNotNullable()))).
+                () => Account.VkApi.Users.Get(Account.VkApi.UserId.Value))).
                 Try(Account.Logger);
 
         public string Current
         {
             get
             {
-                var id = Account.VkApi.UserId.ToNotNullable();
+                var id = Account.VkApi.UserId.Value;
 
                 if (Account.Storage.DialogNames != null
                     && Account.Storage.DialogNames.ContainsKey(id))
@@ -112,12 +112,11 @@ namespace VkData.Account.Categories
             }
         }
 
-      
 
         public void Update(Dialog<Message> obj)
         {
             //users which are not stored in dictionary
-            var ids = obj.Projection.Select(message => message.FromId.ToNotNullable()).ToList();
+            var ids = obj.Projection.Select(VkNetExtensions.GetValidUserId).ToList();
             var users = Account.Users.RequireNotCachedUsers(ids);
             Update(users);
         }
@@ -130,7 +129,7 @@ namespace VkData.Account.Categories
 
 
         public string GetFullUserName(long? id)
-            => Account.Storage.UserIds[id.ToNotNullable()].GetFullName();
+            => Account.Storage.UserIds[id.Value].GetFullName();
 
         public IEnumerable<User> RequireNotCachedUsers(IEnumerable<long> userIds)
         {
@@ -157,7 +156,7 @@ namespace VkData.Account.Categories
 
         public string GetFullUserName(Message message)
         {
-            return GetFullUserName(GetValidUserId(message));
+            return GetFullUserName(message.GetValidUserId());
         }
 
         private void Update(User item)
@@ -167,16 +166,9 @@ namespace VkData.Account.Categories
             Account.Storage.DialogNames[item.Id] = item.GetFullName();
         }
 
-        public static long GetValidUserId(Message message)
+        public  bool FromCurrent(Message message)
         {
-            if (message.FromId == null
-                && message.UserId == null)
-                return message.Id.ToNotNullable();
-
-            if (message.UserId != null)
-                return message.UserId.Value;
-
-            return message.FromId.ToNotNullable();
+            return GetFullUserName(message) == Current;
         }
     }
 }

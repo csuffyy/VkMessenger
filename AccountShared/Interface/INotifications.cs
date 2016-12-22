@@ -3,7 +3,7 @@ using VkNet.Model;
 
 namespace VkData.Interface
 {
-    public interface INotifications<TMessage, in TResponse> 
+    public interface INotifications<TMessage, in TResponse>
     {
         bool IsStarted { get; }
         ObservableConcurrentDictionary<string, Dialog<Message>> Notifications { get; set; }

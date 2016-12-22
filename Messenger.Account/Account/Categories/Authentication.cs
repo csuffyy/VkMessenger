@@ -23,7 +23,8 @@ namespace VkData.Account.Categories
 
         public
             IAccount
-                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, PhotoSize, StickerSize>
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, PhotoSize, StickerSize>
             Account { get; set; }
 
         public void Start()

@@ -23,10 +23,7 @@ namespace Messenger.Wpf.Views
         {
             var scrollViewer = d as ScrollViewer;
 
-            if (scrollViewer != null && (bool) e.NewValue)
-            {
-                scrollViewer.ScrollToBottom();
-            }
+            scrollViewer?.ScrollToBottom();
         }
     }
 }

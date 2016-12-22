@@ -5,9 +5,14 @@ namespace VkData.Helpers
 {
     public class JsonSerializer : ISerializer
     {
-        public string SerializeObject(object obj) =>
-            JsonConvert.SerializeObject(obj, Formatting.Indented);
+        private static readonly JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+        };
 
-        public T DeserializeObject<T>(string s) => JsonConvert.DeserializeObject<T>(s);
+        public string SerializeObject(object obj) =>
+            JsonConvert.SerializeObject(obj, settings);
+
+        public T DeserializeObject<T>(string s) => JsonConvert.DeserializeObject<T>(s, settings);
     }
 }

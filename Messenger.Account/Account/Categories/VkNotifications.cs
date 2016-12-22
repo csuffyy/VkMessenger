@@ -19,20 +19,21 @@ namespace VkData.Account.Categories
     public class VkNotifications :
         AccountService
             <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo,
-                StickerSize, Enums.PhotoSize>,
+                StickerSize, PhotoSize>,
         INotifications<Message, LongPollServerResponse>
     {
-        public ulong NewTs;
-
         private readonly Dictionary<string, IJsonParseStrategy<IVkAccount, JToken>>
             _strategies = new Dictionary<string, IJsonParseStrategy<IVkAccount, JToken>>
             {
                 {"4", new MessageStrategy()}
             };
 
-    public VkNotifications(
+        public ulong NewTs;
+
+        public VkNotifications(
             IAccount
-                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, PhotoSize, StickerSize>
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, PhotoSize, StickerSize>
                 Account) : base(Account)
         {
         }
@@ -93,8 +94,9 @@ namespace VkData.Account.Categories
         private object ParseJtoken(JToken token)
         {
             var flag = GetFlag(token);
-            return _strategies.ContainsKey(flag) ? 
-                _strategies[flag].Parse(token, (IVkAccount) Account) : null;
+            return _strategies.ContainsKey(flag)
+                ? _strategies[flag].Parse(token, (IVkAccount) Account)
+                : null;
         }
 
         private static string GetFlag(JToken token) => token[0].ToString();

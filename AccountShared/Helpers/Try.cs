@@ -42,7 +42,7 @@ namespace VkData.Helpers
 
                 #region Try<TSource> support
 
-                if (typeof(TException) == typeof(Exception))
+                if (typeof (TException) == typeof (Exception))
                 {
                     logger?.Log(e);
                     Result = new Result<TSource>(GetEmpty(), false);
@@ -72,7 +72,7 @@ namespace VkData.Helpers
 
                 #region Try<TSource> support
 
-                if (typeof(TException) == typeof(Exception))
+                if (typeof (TException) == typeof (Exception))
                 {
                     logger?.Log(e);
                 }
@@ -91,9 +91,9 @@ namespace VkData.Helpers
 
         private static TSource GetEmpty()
         {
-            var type = typeof(TSource);
+            var type = typeof (TSource);
             if (type.IsClass)
-                return (TSource)Activator.CreateInstance(typeof(TSource));
+                return (TSource) Activator.CreateInstance(typeof (TSource));
 
             return default(TSource);
         }

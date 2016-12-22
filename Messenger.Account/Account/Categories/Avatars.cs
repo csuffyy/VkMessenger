@@ -13,12 +13,14 @@ using VkNet;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
+using PhotoSize = VkData.Account.Enums.PhotoSize;
 
 namespace VkData.Account.Categories
 {
     public class Avatars :
         AccountService
-            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, Enums.PhotoSize>,
+            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo,
+                StickerSize, PhotoSize>,
         IAvatars<Message>
     {
         public const string EmptyAvatar = "https://vk.com/images/camera_200.png";
@@ -49,10 +51,10 @@ namespace VkData.Account.Categories
 
                 if (key == null)
                     continue;
-                Account.Downloader.DownloadAsync(
-                  friends[key].Photo100, item, PathOptions.Full, true);
+                 Account.Downloader.DownloadSyncronously(
+                    friends[key].Photo100, item, PathOptions.Full, true);
             }
-            Account.Downloader.DownloadAsync(EmptyAvatar, GetEmptyAvatar(Path), PathOptions.Full);
+             Account.Downloader.DownloadSyncronously(EmptyAvatar, GetEmptyAvatar(Path), PathOptions.Full);
 
             foreach (var chat in Account.Chats.Dictionary)
                 ChatDictionary[chat.Key] = await GetChatImage(chat.Key, 100);
@@ -79,8 +81,17 @@ namespace VkData.Account.Categories
 
             var users = Account.Chats.Dictionary[chatName].Users;
             var images = new string[4];
+            var indices = new int[4];
+            var random = new Random();
+            var range = users.Count/4;
+            range = range == 0 ? 1 : range;
+            indices[0] = random.Next(0, range);
+            indices[1] = random.Next(indices[0] + 1, range*2);
+            indices[2] = random.Next(indices[1] + 1, range*3);
+            indices[3] = random.Next(indices[2] + 1, range*4 - 1);
+           
             for (var i = 0; i < images.Length - 1; i++)
-                images[i] = await Get(users[i]);
+                images[i] = await Get(users[indices[i]]);
 
             images[3] = GetEmptyAvatar(Path);
             if (users.Count > 3)
@@ -91,12 +102,13 @@ namespace VkData.Account.Categories
                 {
                     var key = System.IO.Path.GetFileName(s)?.Replace(Account.AppSettings.PhotoExtension, string.Empty);
 
-                    var uri = key == "NoAvatar" ? new Uri(EmptyAvatar) : 
-                        Account.Users.Friends[key].Photo100;
+                    var uri = key == "NoAvatar"
+                        ? new Uri(EmptyAvatar)
+                        : Account.Users.Friends[key].Photo100;
 
                     return
                         Account.Downloader.DownloadSyncronously(
-                           uri, s, PathOptions.Full, true);
+                            uri, s, PathOptions.Full, true);
                 }),
                 CancellationToken.None,
                 TaskCreationOptions.LongRunning,
@@ -104,6 +116,7 @@ namespace VkData.Account.Categories
 
             return path;
         }
+
 
         /// <summary>
         ///     creates a square image from 4 images
@@ -113,7 +126,8 @@ namespace VkData.Account.Categories
         /// <param name="images">represents 4 images</param>
         /// <param name="indent">indent bettween parts</param>
         /// <param name="requestAgain">empty image</param>
-        protected static void CoupleImages(int size, string path, IList<string> images, int indent, Func<string, string> requestAgain)
+        protected static void CoupleImages(int size, string path, IList<string> images, int indent,
+            Func<string, string> requestAgain)
         {
             for (var i = 0; i < images.Count; i++)
             {
@@ -126,7 +140,7 @@ namespace VkData.Account.Categories
                 using (var g = Graphics.FromImage(bmp))
                 {
                     //part size
-                    var s = size / 2 - indent;
+                    var s = size/2 - indent;
                     g.DrawImage(Image.FromFile(images[0]), 0, 0, s, s);
                     g.DrawImage(Image.FromFile(images[1]), s, 0, s, s);
                     g.DrawImage(Image.FromFile(images[2]), 0, s, s, s);
@@ -211,7 +225,7 @@ namespace VkData.Account.Categories
                 return await GetChatImage(dialogName, 100);
 
             var user = Account.Storage.Users[dialogName];
-            return Account.Downloader.DownloadAsync(
+            return await Account.Downloader.DownloadAsync(
                 user.Photo100,
                 GetPath(Path, dialogName, user.Photo100),
                 PathOptions.Full);

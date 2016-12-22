@@ -8,12 +8,14 @@ using VkNet;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
+using PhotoSize = VkData.Account.Enums.PhotoSize;
 
 namespace VkData.Account.Categories
 {
     public class Chats :
         AccountService
-            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, StickerSize, Enums.PhotoSize >,
+            <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo,
+                StickerSize, PhotoSize>,
         IChats<Chat>
     {
         private const int VkChatFlag = (int) 2e9;
@@ -30,9 +32,9 @@ namespace VkData.Account.Categories
                 if (Account.Storage.Chats.Count != 0)
                     return Account.Storage.Chats.Select(p => p.Value);
 
-                var chatIds = Account.History.GetDialogs(History.MaxMessagesCount).
+                var chatIds = Account.History.GetDialogs(History.MaxMessagesLimit).
                     Where(message => message.ChatId != null).
-                    Select(message => message.ChatId.ToNotNullable()).
+                    Select(message => message.ChatId.Value).
                     ToList();
 
                 if (!chatIds.Any())
@@ -67,6 +69,9 @@ namespace VkData.Account.Categories
         }
 
         public static bool IsChatId(long id) => id > VkChatFlag;
-        public static long ChatIdToPeerId(long chatId) => chatId + VkChatFlag;
+        public static long ChatIdToPeerId(long chatId)
+        {
+            return chatId + VkChatFlag;
+        }
     }
 }

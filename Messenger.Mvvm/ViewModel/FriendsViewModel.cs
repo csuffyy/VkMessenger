@@ -7,8 +7,8 @@ namespace MvvmService.ViewModel
     {
         public FriendsViewModel(IVkAccount account) : base(account)
         {
-            
         }
+
         protected override List<KeyValuePair<string, string>> AvatarsImpl => Account.Avatars.FriendsList;
     }
 }

@@ -16,7 +16,8 @@ namespace MvvmService.ViewModel
     {
         public static ViewModelBase ToViewModel(this Message message,
             IAccount
-                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, PhotoSize, StickerSize>
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, PhotoSize, StickerSize>
                 account)
         {
             return new MessageViewModel(account, message);
@@ -24,7 +25,8 @@ namespace MvvmService.ViewModel
 
         public static List<MessageViewModel> ToViewModels(this IEnumerable<Message> messages,
             IAccount
-                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams, Photo, PhotoSize, StickerSize>
+                <Message, User, LongPollServerResponse, VkApi, LongPollServerSettings, Chat, MessagesGetHistoryParams,
+                    Photo, PhotoSize, StickerSize>
                 account)
         {
             return messages.Select(m => new MessageViewModel(account, m)).ToList();
