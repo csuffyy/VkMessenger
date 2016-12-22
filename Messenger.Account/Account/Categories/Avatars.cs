@@ -41,6 +41,7 @@ namespace VkData.Account.Categories
 
             var valid = Directory.GetFiles(Path).Where(IsValidGDIPlusImage).ToList();
 
+            Account.Downloader.DownloadSyncronously(EmptyAvatar, GetEmptyAvatar(Path), PathOptions.Full, true);
 
             foreach (
                 var item in
@@ -51,16 +52,13 @@ namespace VkData.Account.Categories
 
                 if (key == null)
                     continue;
-                 Account.Downloader.DownloadSyncronously(
-                    friends[key].Photo100, item, PathOptions.Full, true);
+                Account.Downloader.DownloadSyncronously(
+                   friends[key].Photo100, item, PathOptions.Full, true);
             }
-             Account.Downloader.DownloadSyncronously(EmptyAvatar, GetEmptyAvatar(Path), PathOptions.Full);
 
             foreach (var chat in Account.Chats.Dictionary)
                 ChatDictionary[chat.Key] = await GetChatImage(chat.Key, 100);
 
-            FriendsList = FriendsDictionary.ToList();
-            ChatList = ChatDictionary.ToList();
         }
 
         public async Task<string> GetChatImage(string chatName, int size)
@@ -83,13 +81,13 @@ namespace VkData.Account.Categories
             var images = new string[4];
             var indices = new int[4];
             var random = new Random();
-            var range = users.Count/4;
+            var range = users.Count / 4;
             range = range == 0 ? 1 : range;
             indices[0] = random.Next(0, range);
-            indices[1] = random.Next(indices[0] + 1, range*2);
-            indices[2] = random.Next(indices[1] + 1, range*3);
-            indices[3] = random.Next(indices[2] + 1, range*4 - 1);
-           
+            indices[1] = random.Next(indices[0] + 1, range * 2);
+            indices[2] = random.Next(indices[1] + 1, range * 3);
+            indices[3] = random.Next(indices[2] + 1, range * 4 - 1);
+
             for (var i = 0; i < images.Length - 1; i++)
                 images[i] = await Get(users[indices[i]]);
 
@@ -135,16 +133,20 @@ namespace VkData.Account.Categories
                 images[i] = requestAgain(images[i]);
             }
 
+            Func<string, Image> fromFile = Image.FromFile;
+
+            Image[] _images = images.Select(fromFile).ToArray();
+
             using (var bmp = new Bitmap(size, size))
             {
                 using (var g = Graphics.FromImage(bmp))
                 {
                     //part size
-                    var s = size/2 - indent;
-                    g.DrawImage(Image.FromFile(images[0]), 0, 0, s, s);
-                    g.DrawImage(Image.FromFile(images[1]), s, 0, s, s);
-                    g.DrawImage(Image.FromFile(images[2]), 0, s, s, s);
-                    g.DrawImage(Image.FromFile(images[3]), s, s, s, s);
+                    var s = size / 2 - indent;
+                    g.DrawImage(_images[0], 0, 0, s, s);
+                    g.DrawImage(_images[1], s, 0, s, s);
+                    g.DrawImage(_images[2], 0, s, s, s);
+                    g.DrawImage(_images[3], s, s, s, s);
                     g.Save();
                 }
                 bmp.Save(path);
@@ -168,8 +170,15 @@ namespace VkData.Account.Categories
 
         #region public properties
 
-        public List<KeyValuePair<string, string>> FriendsList { get; private set; }
-        public List<KeyValuePair<string, string>> ChatList { get; private set; }
+        public List<KeyValuePair<string, string>> FriendsList
+        {
+            get { return FriendsDictionary.ToList(); }
+        }
+
+        public List<KeyValuePair<string, string>> ChatList
+        {
+            get { return ChatDictionary.ToList(); }
+        }
 
         public Dictionary<string, string> FriendsDictionary { get; private set; }
         public Dictionary<string, string> ChatDictionary { get; } = new Dictionary<string, string>();

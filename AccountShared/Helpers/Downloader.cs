@@ -20,6 +20,8 @@ namespace VkData.Helpers
 
         private WebClient Client { get; }
 
+        public bool Busy { get { return Client.IsBusy; } }
+
         public string Path { get; set; }
 
         public Task<string> DownloadAsync(Uri uri, string subPath, PathOptions options = PathOptions.Partial,
@@ -71,7 +73,7 @@ namespace VkData.Helpers
             }
             else
             {
-                File.Delete(path);
+               // File.Delete(path);
             }
 
             FileUtils.CreateIfNotExist(System.IO.Path.GetDirectoryName(path));

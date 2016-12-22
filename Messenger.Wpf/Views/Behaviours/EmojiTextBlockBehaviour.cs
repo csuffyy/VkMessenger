@@ -22,7 +22,7 @@ namespace Messenger.Wpf.Views.Behaviours
            new Dictionary<string, string>();
         static EmojiTextBehavior()
         {
-            var path = Environment.CurrentDirectory.JoinPath("Vk-emoji");
+            var path = Environment.CurrentDirectory.JoinPath("..\\..\\Views\\Assets\\Vk-emoji");
 
             var info = Directory.GetFiles(path);
             foreach (var t in info)

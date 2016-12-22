@@ -142,6 +142,7 @@ namespace MvvmService.ViewModel
 
         private void Update(long offset)
         {
+            
             var dialog =
                 Account.History.GetHistory(DialogName, offset, History.MaxMessagesLimit).Value;
 
@@ -149,6 +150,11 @@ namespace MvvmService.ViewModel
                 dialog =
                     Account.History.GetHistory(DialogName, offset, null).Value;
 
+            if (dialog.Offsets[offset].Value.Count == 0)
+            {
+              OnEnd?.Invoke();
+              return;
+            };
             var observableCollection = dialog.Offsets[offset].Value.ToViewModels(Account).ToObservable();
             Messages = observableCollection;
             OnEnd?.Invoke();

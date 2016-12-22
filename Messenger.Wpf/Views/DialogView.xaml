@@ -73,7 +73,7 @@
                                         MaxWidth="210"
                                         Margin="5,0,0,0"
                                         TextWrapping="Wrap">
-                                        
+
                                         <i:Interaction.Behaviors>
                                             <behaviours:EmojiTextBehavior Condition="{Binding HasEmoji}" DataObject="{Binding Message}" />
                                         </i:Interaction.Behaviors>

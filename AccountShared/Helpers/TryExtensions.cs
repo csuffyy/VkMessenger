@@ -54,5 +54,39 @@ namespace VkData.Helpers
         {
             return new Try<T, Exception>(execute, onException, logger);
         }
+
+        public static Result<T> Try<T, TParam>(this Func<TParam, T> execute, TParam parameter, ILogger logger = null)
+        {
+            return new Try<T>(() => execute(parameter), logger);
+        }
+
+        public static Result<T> Try<T, TParam>(this Func<TParam, T> execute, TParam parameter, Action<Exception> onException, ILogger logger = null)
+        {
+            return new Try<T>(() => execute(parameter), onException, logger);
+        }
+
+        public static Result<T> Try<TParam, T, TException>(this Func<TParam, T> execute, TParam parameter, Action<TException> onException,
+            ILogger logger = null) where TException : Exception
+        {
+            return new Try<T, TException>(() => execute(parameter), onException, logger);
+        }
+
+        public static Result<T> Try<TParam, T, TException>(this Func<TParam, T> execute, TParam parameter, 
+            ILogger logger = null) where TException : Exception
+        {
+            return new Try<T, TException>(() => execute(parameter), e => { }, logger);
+        }
+
+        public static Result<T> TryOr<T, TException, TParam>(this Func<TParam, T>execute, TParam parameter, Func<TException, T> onException,
+            ILogger logger = null) where TException : Exception
+        {
+            return new Try<T, TException>(() => execute(parameter), onException, logger);
+        }
+
+        public static Result<T> TryOr<T, TParam>(this Func<TParam, T>execute, TParam parameter, Func<Exception, T> onException,
+            ILogger logger = null)
+        {
+            return new Try<T, Exception>(() => execute(parameter), onException, logger);
+        }
     }
 }
