@@ -35,6 +35,8 @@ namespace VkData.Account.Categories
         private Dictionary<string, Action> _writeMappingString { get; set; }
         public Action RefreshAccount { get; set; }
 
+        public bool WriteEnabled { get; set; } = true;
+
         public string Path
         {
             get { return Writer.Path; }
@@ -68,9 +70,9 @@ namespace VkData.Account.Categories
             DialogNames = new Dictionary<long, string>();
             History = new Dictionary<string, Dialog<Message>>();
             Users = new Dictionary<string, User>();
-            // if you dont refresh an account 
+            // if you dont refresh an account
             // you'll get problems in your account
-            // but it isn't exacly the problem 
+            // but it isn't exacly the problem
             // of storage, but account so we inject
             // an action, that refreshes account
             RefreshAccount?.Invoke();
@@ -99,18 +101,24 @@ namespace VkData.Account.Categories
 
         public void Write(string propertyName)
         {
+          if(!WriteEnabled)
+              return;
             if (_writeMappingString.ContainsKey(propertyName))
                 _writeMappingString[propertyName]?.Invoke();
         }
 
         public void Write(object property)
         {
+          if(!WriteEnabled)
+              return;
             if (_writeMappingObject.ContainsKey(property))
                 _writeMappingObject[property]?.Invoke();
         }
 
         public void WriteAll()
         {
+          if(!WriteEnabled)
+              return;
 /*
             Writer.Write(DialogNames, "dialogNames");
             Writer.Write(UserIds, "userIds");

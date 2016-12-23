@@ -67,6 +67,8 @@ namespace MvvmService.ViewModel
                 OnApiException);
 
             Account = _defaultAccount;
+            Account.Logger.PropertyChanged +=
+              (s, e) => LastLoggerMessage = Account.Logger.LastLoggerMessage;
             Account.Authentication.Start();
         }
 
@@ -100,8 +102,7 @@ namespace MvvmService.ViewModel
                 TaskCreationOptions.LongRunning,
                 TaskScheduler.Default);
 
-            Account.Logger.PropertyChanged += (s, e) => LastLoggerMessage = Account.Logger.LastLoggerMessage;
-        });
+                });
 
         public bool IsOpenDialog
         {

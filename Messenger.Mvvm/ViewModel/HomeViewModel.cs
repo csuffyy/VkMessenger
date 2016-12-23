@@ -54,7 +54,7 @@ namespace MvvmService.ViewModel
         {
             ApplicationSettings.Value.LastDialog = VkViewModel?.LastDialog;
             ApplicationSettings.Value.Save();
-            Account.Storage.WriteAll();
+            //Account.Storage.WriteAll();
             Application.Current.Dispatcher.Invoke(
                 Application.Current.Shutdown,
                 DispatcherPriority.Send);
