@@ -94,7 +94,9 @@ namespace MvvmService.ViewModel
 
         public ICommand LoadNext => new RelayCommand(() =>
         {
+          //notice here should be a new notifications check
             if (_messagesGetOffset == 0) return;
+
             _messagesGetOffset -= History.VkMessagesOffset;
             ShowProgess();
             UpdateAsync(_messagesGetOffset);
@@ -142,15 +144,12 @@ namespace MvvmService.ViewModel
 
         private void Update(long offset)
         {
-            
+
             var dialog =
                 Account.History.GetHistory(DialogName, offset, History.MaxMessagesLimit).Value;
 
-            if (dialog.Offsets[offset].Value.Count == 0)
-                dialog =
-                    Account.History.GetHistory(DialogName, offset, null).Value;
-
-            if (dialog.Offsets[offset].Value.Count == 0)
+            if (  dialog.Offsets.Count == 0
+                ||dialog.Offsets[offset].Value.Count == 0)
             {
               OnEnd?.Invoke();
               return;
