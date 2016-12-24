@@ -89,9 +89,14 @@
                 <ScrollViewer
                     x:Name="Scroll"
                     Grid.Row="1"
-                    Grid.Column="0">
+                    MaxWidth="180"
+                    Grid.Column="0"
+
+                  >
+
+<Grid MaxWidth="{Binding ElementName=Scroll, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl
-                        MaxWidth="227.261"
+
                         Margin="0,0,0,0"
                         ItemsSource="{Binding Avatars}">
                         <ItemsControl.ItemsPanel>
@@ -103,7 +108,7 @@
                         <ItemsControl.ItemTemplate>
 
                             <DataTemplate>
-                                <Grid>
+                                <Grid >
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition Height="Auto" />
@@ -162,6 +167,7 @@
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Center"
+                                            TextWrapping="Wrap"
                                             Text="{Binding Key}" />
                                         <materialDesign:PackIcon
                                             Width="10"
@@ -178,6 +184,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                  </Grid>
                 </ScrollViewer>
             </Grid>
         </Grid>
