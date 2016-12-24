@@ -94,7 +94,7 @@
 
                   >
 
-<Grid MaxWidth="{Binding ElementName=Scroll, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged}">
+
                     <ItemsControl
 
                         Margin="0,0,0,0"
@@ -158,12 +158,11 @@
                                         Grid.ColumnSpan="2"
                                         Width="4"
                                         Visibility="Hidden" />
-                                    <StackPanel
+                                    <StackPanel MaxWidth="100"
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         Orientation="Horizontal">
                                         <TextBlock
-                                            Width="Auto"
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Center"
@@ -184,7 +183,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                  </Grid>
+
                 </ScrollViewer>
             </Grid>
         </Grid>

@@ -169,7 +169,7 @@ namespace VkData
                 Offsets = new Dictionary<long, LinkedListNode<List<Message>>>(),
                 All = new LinkedList<List<Message>>()
             };
-            d.Append(toList, offset, true);
+            d.Append(toList, offset, false);
             return d;
         }
     }
