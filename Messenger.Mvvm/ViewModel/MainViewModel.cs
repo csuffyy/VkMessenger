@@ -60,8 +60,10 @@ namespace MvvmService.ViewModel
                 () =>
                 {
                     Authorised = true;
-                    Notifications = new NotificationsViewModel(Account, SimpleIoc.Default);
-                    ChildViewModel = new HomeViewModel(Account, LogOutCommand, ClearCache);
+                    Notifications =
+                     new NotificationsViewModel(Account, SimpleIoc.Default);
+                    ChildViewModel =
+                     new HomeViewModel(Account, LogOutCommand);
                 },
                 OnAuthorizationException,
                 OnApiException);
@@ -73,7 +75,10 @@ namespace MvvmService.ViewModel
         }
 
         private VkAccount _defaultAccount =>
-            new VkAccount(PathSettings.Default(), UserSettings, Callbacks, SimpleIoc.Default);
+            new VkAccount(PathSettings.Default(),
+                  UserSettings,
+                   Callbacks,
+                    SimpleIoc.Default);
 
         public VkCallbacks Callbacks { get; }
         public UserSettings UserSettings { get; }
@@ -94,15 +99,15 @@ namespace MvvmService.ViewModel
             if (!Authorised)
                 return;
             ChildViewModel = new ProgressViewModel();
+            ApplicationSettings.Value.Save();
             Task.Factory.StartNew(() =>
             {
                 Account.Storage.ClearAll();
-                ChildViewModel = new HomeViewModel(Account, LogOutCommand, ClearCache);
+                ChildViewModel = new HomeViewModel(Account, LogOutCommand);
             }, CancellationToken.None,
                 TaskCreationOptions.LongRunning,
                 TaskScheduler.Default);
-
-                });
+        });
 
         public bool IsOpenDialog
         {
@@ -132,7 +137,11 @@ namespace MvvmService.ViewModel
                 Account.Storage.WriteAll();
 
             Account.Notifications.Cancel();
-            Account = new VkAccount(PathSettings.Default(), UserSettings, Callbacks, SimpleIoc.Default);
+            Account = new
+             VkAccount(PathSettings.Default(),
+                UserSettings,
+                 Callbacks,
+                  SimpleIoc.Default);
             Account.Authentication.Start();
         }
 

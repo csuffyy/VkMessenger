@@ -23,6 +23,8 @@ namespace MvvmService.ViewModel
             SetAvatars();
             SelectCurrent = new RelayCommand<string>(Select);
             SearchCommand = new RelayCommand<string>(Search);
+            account.Logger.Log(LastDialog);
+            SelectLastDialog();
         }
 
         public List<KeyValuePair<string, string>> Avatars
@@ -56,7 +58,6 @@ namespace MvvmService.ViewModel
 
         public void SelectLastDialog()
         {
-            _appSettings.Reload();
             LastDialog = _appSettings.LastDialog;
             if (!string.IsNullOrEmpty(LastDialog))
                 Select(LastDialog);
@@ -65,6 +66,8 @@ namespace MvvmService.ViewModel
         private void Select(string dialog)
         {
             LastDialog = dialog;
+            _appSettings.LastDialog = LastDialog;
+            _appSettings.Save();
             ChildViewModel = ProgressViewModel;
 
             DialogViewModel dialogVM;

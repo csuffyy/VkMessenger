@@ -81,12 +81,11 @@
 
                                 </StackPanel>
                                 <Image
+                                   Stretch="None"
                                     HorizontalAlignment="Center"
                                     RenderOptions.BitmapScalingMode="Fant"
                                     Source="{Binding Sticker}">
-                                    <Image.RenderTransform>
-                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                                    </Image.RenderTransform>
+
                                 </Image>
                                 <ItemsControl ItemsSource="{Binding Photos}">
                                     <ItemsControl.ItemsPanel>
@@ -103,7 +102,9 @@
 
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                                <Image Source="{Binding}">
+                                                <Image
+                                                  Margin="2 2 2 0"
+                                                  Source="{Binding}">
 
                                                     <Image.Style>
                                                         <Style TargetType="Image">
