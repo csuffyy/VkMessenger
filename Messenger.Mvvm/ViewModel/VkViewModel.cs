@@ -23,8 +23,8 @@ namespace MvvmService.ViewModel
             SetAvatars();
             SelectCurrent = new RelayCommand<string>(Select);
             SearchCommand = new RelayCommand<string>(Search);
-            account.Logger.Log(LastDialog);
             SelectLastDialog();
+                  account.Logger.Log(LastDialog);
         }
 
         public List<KeyValuePair<string, string>> Avatars
