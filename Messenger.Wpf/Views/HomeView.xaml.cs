@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace Messenger.Wpf.Views
 {
@@ -10,6 +13,15 @@ namespace Messenger.Wpf.Views
         public HomeView()
         {
             InitializeComponent();
+        }
+        private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            HamburgerMenuControl.Content = e.ClickedItem;
+        }
+
+        private void HamburgerMenu_OnOptionsItemClick(object sender, ItemClickEventArgs e)
+        {
+            var menuItem = e.ClickedItem as HamburgerMenuItem;
         }
     }
 }

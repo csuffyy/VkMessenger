@@ -162,14 +162,14 @@ namespace VkData
             }
         }
 
-        public static Dialog<Message> GetDialog(string dialogName, List<Message> toList, long offset)
+        public static Dialog<Message> GetDialog(string dialogName, List<Message> toList, long offset, bool reverse = true)
         {
             var d = new Dialog<Message>(dialogName)
             {
                 Offsets = new Dictionary<long, LinkedListNode<List<Message>>>(),
                 All = new LinkedList<List<Message>>()
             };
-            d.Append(toList, offset, false);
+            d.Append(toList, offset, reverse);
             return d;
         }
     }

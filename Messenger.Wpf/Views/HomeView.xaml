@@ -2,8 +2,10 @@
     x:Class="Messenger.Wpf.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hamburgerMenu="clr-namespace:HamburgerMenu;assembly=HamburgerMenu"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Messenger.Wpf.Views"
@@ -11,7 +13,48 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <ResourceDictionary>
+        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ContentControl
+                    Grid.Column="0"
+                    Content="{Binding Tag}"
+                    Focusable="False"
+                    Foreground="White"
+                    IsTabStop="False" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Foreground="White"
+                    Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Margin="12"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding Glyph}"
+                    Stretch="UniformToFill" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Foreground="White"
+                    Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+        <ResourceDictionary x:Key="MD">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
@@ -30,9 +73,10 @@
 
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="Auto" MaxWidth="188" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <!--
         <hamburgerMenu:HamburgerMenu
             HorizontalAlignment="Left"
             Background="LightGray"
@@ -58,7 +102,7 @@
                     SelectionCommand="{Binding CollapseCommand}"
                     Text="Collapse" />
             </hamburgerMenu:HamburgerMenu.Content>
-        </hamburgerMenu:HamburgerMenu>
+        </hamburgerMenu:HamburgerMenu>-->
         <!--
         <materialDesign:DrawerHost
             Grid.Row="0"
@@ -105,6 +149,53 @@
 
         </materialDesign:DrawerHost>
         -->
+        <Grid Column="0" ZIndex="100" ColumnSpan="2" Margin="-311 0 0 0">
+            <controls:HamburgerMenu
+                x:Name="HamburgerMenuControl"
+               MaxWidth="400"
+                Foreground="White"
+                HamburgerWidth="48"
+                ItemClick="HamburgerMenu_OnItemClick"
+                ItemTemplate="{StaticResource HamburgerMenuImageItem}"
+                OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
+                OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
+                PaneBackground="#FF444444">
+                <!--  Items  -->
+                <controls:HamburgerMenu.ItemsSource>
+                    <controls:HamburgerMenuItemCollection>
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
+                    </controls:HamburgerMenuItemCollection>
+                </controls:HamburgerMenu.ItemsSource>
+
+                <!--  Options  -->
+                <controls:HamburgerMenu.OptionsItemsSource>
+                    <controls:HamburgerMenuItemCollection>
+                        <controls:HamburgerMenuGlyphItem Label="About">
+                            <controls:HamburgerMenuGlyphItem.Tag>
+                                <iconPacks:PackIconMaterial
+                                    Width="22"
+                                    Height="22"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Help" />
+                            </controls:HamburgerMenuGlyphItem.Tag>
+                        </controls:HamburgerMenuGlyphItem>
+                    </controls:HamburgerMenuItemCollection>
+                </controls:HamburgerMenu.OptionsItemsSource>
+
+                <!--  Content  -->
+                <controls:HamburgerMenu.ContentTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="ContentGrid" ZIndex="100" />
+                    </DataTemplate>
+                </controls:HamburgerMenu.ContentTemplate>
+
+            </controls:HamburgerMenu>
+        </Grid>
+
         <ContentControl
             Grid.Row="0"
             Grid.Column="1"

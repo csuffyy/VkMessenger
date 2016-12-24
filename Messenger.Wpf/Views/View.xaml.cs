@@ -25,7 +25,7 @@ namespace Messenger.Wpf.Views
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            ((MainViewModel) DataContext).QuitCommand.Execute(null);
+            ((MainViewModel) DataContext)?.QuitCommand?.Execute(null);
         }
     }
 }

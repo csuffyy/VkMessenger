@@ -51,6 +51,8 @@ namespace MvvmService.ViewModel
         public ICommand QuitCommand => new RelayCommand(() =>
         {
             //Account.Storage.WriteAll();
+            Account = null;
+            GC.Collect();
             Application.Current.Dispatcher.Invoke(
                 Application.Current.Shutdown,
                 DispatcherPriority.Send);

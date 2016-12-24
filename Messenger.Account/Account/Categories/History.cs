@@ -188,7 +188,7 @@ namespace VkData.Account.Categories
         {
             return gr.ToDictionary(
                     g => g.Key,
-                    g => Dialog<Message>.GetDialog(g.Key, g.ToList(), 0));
+                    g => Dialog<Message>.GetDialog(g.Key, g.ToList(), 0, false));
         }
 
         public void SendMessage(string messageText, string recipient)

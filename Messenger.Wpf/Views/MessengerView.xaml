@@ -14,10 +14,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Green.Named.Primary.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -25,11 +23,11 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-
-            <ColumnDefinition x:Name="ColumnDefinition" Width="*" />
+            <ColumnDefinition Width="52" />
+            <ColumnDefinition x:Name="ColumnDefinition" Width="100" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="1">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -63,7 +61,7 @@
                             <TextBox
                                 x:Name="SearchBox"
                                 Grid.Column="1"
-                                MinWidth="{Binding ElementName=Scroll, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                MinWidth="{Binding ElementName=ColumnDefinition, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
                                 materialDesign:HintAssist.Hint="Search"
@@ -72,8 +70,7 @@
                                 Opacity="1">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
-                                        <command:EventToCommand Command="{Binding SearchCommand}"
-                                                                CommandParameter="{Binding ElementName=SearchBox, Path=Text}" />
+                                        <command:EventToCommand Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchBox, Path=Text}" />
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="KeyDown">
                                         <command:EventToCommand Command="{Binding SearchCommand}" />
@@ -89,16 +86,10 @@
                 <ScrollViewer
                     x:Name="Scroll"
                     Grid.Row="1"
-                    MaxWidth="180"
-                    Grid.Column="0"
-
-                  >
+                    Grid.Column="0">
 
 
-                    <ItemsControl
-
-                        Margin="0,0,0,0"
-                        ItemsSource="{Binding Avatars}">
+                    <ItemsControl Margin="0,0,0,0" ItemsSource="{Binding Avatars}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" />
@@ -108,7 +99,7 @@
                         <ItemsControl.ItemTemplate>
 
                             <DataTemplate>
-                                <Grid >
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition Height="Auto" />
@@ -116,14 +107,15 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
+
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <command:EventToCommand
-                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SelectCurrent}"
-                                                CommandParameter="{Binding Key}" />
+                                            <command:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SelectCurrent}" CommandParameter="{Binding Key}" />
 
                                         </i:EventTrigger>
+
                                     </i:Interaction.Triggers>
 
                                     <Image
@@ -133,6 +125,7 @@
                                         Height="60"
                                         HorizontalAlignment="Left"
                                         d:DataContext="{d:DesignData}"
+                                      ToolTip="{Binding Key}"
                                         Source="{Binding Value}">
 
                                         <Image.Style>
@@ -140,6 +133,7 @@
                                                 <Style.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="Cursor" Value="Hand" />
+
                                                     </Trigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -158,16 +152,16 @@
                                         Grid.ColumnSpan="2"
                                         Width="4"
                                         Visibility="Hidden" />
-                                    <StackPanel MaxWidth="100"
+                                    <StackPanel
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         Orientation="Horizontal">
-                                        <TextBlock
+                                        <!--  <TextBlock
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Center"
                                             TextWrapping="Wrap"
-                                            Text="{Binding Key}" />
+                                            Text="{Binding Key}" />-->
                                         <materialDesign:PackIcon
                                             Width="10"
                                             Height="10"
@@ -176,8 +170,15 @@
                                             Foreground="DarkGray"
                                             Kind="CheckboxBlankCircle"
                                             Visibility="{Binding Online, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    </StackPanel>
 
+
+
+                                    </StackPanel>
+                                    <Separator
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        Width="30"
+                                        Visibility="Hidden" />
 
                                 </Grid>
                             </DataTemplate>
@@ -187,7 +188,7 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <ContentControl Grid.Column="1" Content="{Binding ChildViewModel}" />
+        <ContentControl Grid.Column="2" Content="{Binding ChildViewModel}" />
     </Grid>
 
 </UserControl>
