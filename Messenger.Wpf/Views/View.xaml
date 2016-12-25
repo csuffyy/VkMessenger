@@ -65,7 +65,7 @@ BeginTime="0:0:0"                                             AutoReverse="True"
 
         <materialDesign:ColorZone 
             Panel.ZIndex="100"
-            Height="16"
+            Height="20"
             materialDesign:ShadowAssist.ShadowDepth="Depth1"
             Visibility="{Binding Authorised, Converter={StaticResource BooleanToVisibilityConverter}}"  
             Background="#FF444444"
@@ -73,7 +73,7 @@ BeginTime="0:0:0"                                             AutoReverse="True"
        
       
         </materialDesign:ColorZone>
-      <Menu Height="26" >
+      <Menu Height="31" >
                 <!--       <MenuItem
                 Foreground="White"
               FontSize="12"

@@ -179,16 +179,40 @@
                 </controls:HamburgerMenu.Resources>
                 <controls:HamburgerMenu.ItemsSource>
                     <controls:HamburgerMenuItemCollection>
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/search.png" Label="Big four summer heat" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/person.png" Label="Bison badlands Chillin" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/wechat.png" Label="Giant slab in Oregon" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/settings.png" Label="Lake Ann Mushroom" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
+                       
                     </controls:HamburgerMenuItemCollection>
                 </controls:HamburgerMenu.ItemsSource>
 
                 <!--  Options  -->
                 <controls:HamburgerMenu.OptionsItemsSource>
                     <controls:HamburgerMenuItemCollection>
+                        <controls:HamburgerMenuGlyphItem Label="Settings">
+                            <controls:HamburgerMenuGlyphItem.Tag>
+                                <iconPacks:PackIconMaterial
+                                    Width="18"
+                                    Height="18"
+                                    Margin="0 0 0 -20"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Settings" >
+                                    <iconPacks:PackIconMaterial.Style>
+                                     
+                                            <Style TargetType="iconPacks:PackIconMaterial">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                           
+                                        </Style>
+                                    </iconPacks:PackIconMaterial.Style>
+                                </iconPacks:PackIconMaterial>
+                            </controls:HamburgerMenuGlyphItem.Tag>
+                        </controls:HamburgerMenuGlyphItem>
                         <controls:HamburgerMenuGlyphItem Label="About">
                             <controls:HamburgerMenuGlyphItem.Tag>
                                 <iconPacks:PackIconMaterial
@@ -196,7 +220,19 @@
                                     Height="22"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Kind="Help" />
+                                    Kind="Help" >
+                                    <iconPacks:PackIconMaterial.Style>
+
+                                        <Style TargetType="iconPacks:PackIconMaterial">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                </Trigger>
+                                            </Style.Triggers>
+
+                                        </Style>
+                                    </iconPacks:PackIconMaterial.Style>
+                                </iconPacks:PackIconMaterial>
                             </controls:HamburgerMenuGlyphItem.Tag>
                         </controls:HamburgerMenuGlyphItem>
                     </controls:HamburgerMenuItemCollection>
