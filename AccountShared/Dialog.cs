@@ -13,6 +13,14 @@ namespace VkData
         private readonly int _nodeCount = 20;
         private LinkedList<List<TMessage>> _all = new LinkedList<List<TMessage>>();
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return Offsets == null || Offsets.Count == 0;
+            }
+        }
+
         public Dialog()
         {
         }

@@ -208,21 +208,24 @@ namespace VkData.Account.Categories
         /// </summary>
         /// <param name="message">VkNet.Model.Message</param>
         /// <returns>avatar path</returns>
-        public Task<string> Get(Message message) => Get(Account.Users.GetFullUserName(message));
+        public Task<string> Get(Message message) => GetAsync(Account.Users.GetFullUserName(message));
 
         /// <summary>
         ///     returns local path to sender's avatar image
         /// </summary>
         /// <param name="userId">userId</param>
         /// <returns>avatar path</returns>
-        public Task<string> Get(long userId) => Get(Account.Users.GetFullUserName(userId));
+        public Task<string> Get(long userId)
+        {
+            return GetAsync(Account.Users.GetFullUserName(userId));
+        }
 
         /// <summary>
         ///     returns local path to user's or chat's avatar image
         /// </summary>
         /// <param name="dialogName">full name of user</param>
         /// <returns>avatar path</returns>
-        public async Task<string> Get(string dialogName)
+        public async Task<string> GetAsync(string dialogName)
         {
             if (ChatDictionary.ContainsKey(dialogName))
                 return ChatDictionary[dialogName];

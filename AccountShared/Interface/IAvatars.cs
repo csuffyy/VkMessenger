@@ -32,6 +32,6 @@ namespace VkData.Interface
         /// </summary>
         /// <param name="dialogName">full name of user</param>
         /// <returns>avatar path</returns>
-        Task<string> Get(string dialogName);
+        Task<string> GetAsync(string dialogName);
     }
 }

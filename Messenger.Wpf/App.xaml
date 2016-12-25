@@ -98,6 +98,9 @@
             <converters:CardAlignmentConverter x:Key="CardAlignmentConverter" />
 <viewModel:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
 
+            <DataTemplate DataType="{x:Type viewModel:EmptyHistoryViewModel}">
+                <views:EmptyHistory/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:ChatsViewModel}">
                 <views:MessengerView />
             </DataTemplate>
@@ -123,6 +126,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+
 
             </ResourceDictionary.MergedDictionaries>
 

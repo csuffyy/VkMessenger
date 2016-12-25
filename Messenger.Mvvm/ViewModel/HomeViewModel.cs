@@ -66,6 +66,7 @@ namespace MvvmService.ViewModel
 
             Task.Factory.StartNew(() =>
             {
+                ChildViewModel = ProgressViewModel;
                 if (_cachedViewModels.ContainsKey(typeof (T)))
                 {
                     ChildViewModel = _cachedViewModels[typeof (T)];
@@ -77,7 +78,6 @@ namespace MvvmService.ViewModel
             }, CancellationToken.None,
                 TaskCreationOptions.LongRunning,
                 TaskScheduler.Default);
-            ChildViewModel = ProgressViewModel;
         }
     }
 }

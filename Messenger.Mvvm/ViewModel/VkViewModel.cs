@@ -7,6 +7,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using VkData.Account.Interface;
+using GalaSoft.MvvmLight;
 
 namespace MvvmService.ViewModel
 {
@@ -22,7 +23,7 @@ namespace MvvmService.ViewModel
         {
             SetAvatars();
             SelectCurrent = new RelayCommand<string>(Select);
-            SearchCommand = new RelayCommand<string>(Search);
+            SearchCommand = new RelayCommand<string>(SearchAsync);
             SelectLastDialog();
                   account.Logger.Log(LastDialog);
         }
@@ -73,18 +74,24 @@ namespace MvvmService.ViewModel
             DialogViewModel dialogVM;
             if (!_cachedViewModels.ContainsKey(dialog))
             {
-                dialogVM = new DialogViewModel(Account, dialog, () => ChildViewModel = ProgressViewModel);
+                dialogVM = new DialogViewModel(Account, dialog, 
+                    () => ChildViewModel = ProgressViewModel);
                 _cachedViewModels[dialog] = dialogVM;
             }
             else
             {
                 dialogVM = _cachedViewModels[dialog];
             }
-            dialogVM.OnEnd = () => ChildViewModel = dialogVM;
+            dialogVM.OnEnd = (d) => 
+            {
+                ChildViewModel = d.IsEmpty ?
+                (ViewModelBase)new EmptyHistoryViewModel() 
+                : dialogVM;
+            };
             dialogVM.UpdateAsync(0);
         }
 
-        private async void Search(string s)
+        private async void SearchAsync(string s)
         {
             await Task.Factory.StartNew(() =>
             {

@@ -11,6 +11,8 @@ using VkData.Account.Categories;
 using VkData.Account.Interface;
 using VkData.Helpers;
 using VkData.Interface;
+using VkData;
+using VkNet.Model;
 
 namespace MvvmService.ViewModel
 {
@@ -87,7 +89,7 @@ namespace MvvmService.ViewModel
 
         public ICommand LoadPrevious => new RelayCommand(() =>
         {
-            _messagesGetOffset += History.VkMessagesOffset;
+            _messagesGetOffset += VkData.Account.Categories.History.VkMessagesOffset;
             ShowProgess();
             UpdateAsync(_messagesGetOffset);
         });
@@ -97,7 +99,7 @@ namespace MvvmService.ViewModel
           //notice here should be a new notifications check
             if (_messagesGetOffset == 0) return;
 
-            _messagesGetOffset -= History.VkMessagesOffset;
+            _messagesGetOffset -= VkData.Account.Categories.History.VkMessagesOffset;
             ShowProgess();
             UpdateAsync(_messagesGetOffset);
         });
@@ -110,7 +112,7 @@ namespace MvvmService.ViewModel
                     return;
                 var body = Body;
                 Body = string.Empty;
-                Application.Current.Dispatcher.Invoke(async () =>
+                System.Windows.Application.Current.Dispatcher.Invoke(async () =>
                 {
                     IsMessageInComing = true;
                     if (_messagesGetOffset != 0)
@@ -118,7 +120,7 @@ namespace MvvmService.ViewModel
                     Messages.Add(new MessageViewModel
                     {
                         Message = body.GetText(Account.Users.Current),
-                        ImageUrl = await Account.Avatars.Get(Account.Users.Current),
+                        ImageUrl = await Account.Avatars.GetAsync(Account.Users.Current),
                         Timestamp = DateTime.Now.ToShortTimeString()
                     });
                 });
@@ -129,11 +131,11 @@ namespace MvvmService.ViewModel
 
         public ICommand ShowPhotoInViewer => new RelayCommand<string>(s => Process.Start(s));
 
-        public Action OnEnd { get; set; }
+        public Action<Dialog<Message>> OnEnd { get; set; }
 
         public async void UpdateAsync(long offset)
         {
-            Avatar = await Account.Avatars.Get(DialogName);
+            Avatar = await Account.Avatars.GetAsync(DialogName);
             await
                 Task.Factory.StartNew(
                     () => Update(offset),
@@ -146,17 +148,17 @@ namespace MvvmService.ViewModel
         {
 
             var dialog =
-                Account.History.GetHistory(DialogName, offset, History.MaxMessagesLimit).Value;
+                Account.History.GetHistory(DialogName, offset, VkData.Account.Categories.History.MaxMessagesLimit).Value;
 
             if (  dialog.Offsets.Count == 0
                 ||dialog.Offsets[offset].Value.Count == 0)
             {
-              OnEnd?.Invoke();
+              OnEnd?.Invoke(dialog);
               return;
             };
             var observableCollection = dialog.Offsets[offset].Value.ToViewModels(Account).ToObservable();
             Messages = observableCollection;
-            OnEnd?.Invoke();
+            OnEnd?.Invoke(dialog);
             IsMessageInComing = true;
         }
     }

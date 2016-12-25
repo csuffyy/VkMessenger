@@ -56,6 +56,13 @@
         </DataTemplate>
         <ResourceDictionary x:Key="MD">
             <ResourceDictionary.MergedDictionaries>
+             
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
@@ -149,7 +156,13 @@
 
         </materialDesign:DrawerHost>
         -->
+<<<<<<< Updated upstream
         <Grid Column="0" ZIndex="100" ColumnSpan="2" Margin="-311 0 0 0">
+=======
+
+        <Grid Column="0" ZIndex="99" ColumnSpan="2" Margin="-311 -10 0 0">
+
+>>>>>>> Stashed changes
             <controls:HamburgerMenu
                 x:Name="HamburgerMenuControl"
                MaxWidth="400"
@@ -163,10 +176,10 @@
                 <!--  Items  -->
                 <controls:HamburgerMenu.ItemsSource>
                     <controls:HamburgerMenuItemCollection>
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/search.png" Label="Big four summer heat" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/person.png" Label="Bison badlands Chillin" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/wechat.png" Label="Giant slab in Oregon" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/keyboard-backspace.png" Label="Lake Ann Mushroom" />
                     </controls:HamburgerMenuItemCollection>
                 </controls:HamburgerMenu.ItemsSource>
 
