@@ -7,7 +7,7 @@ namespace VkData.Interface
     {
         bool IsStarted { get; }
         ObservableConcurrentDictionary<string, Dialog<Message>> Notifications { get; set; }
-        void WaitForUpdates(TResponse response, ref ulong newTs);
+        void TrackUpdates(TResponse response, ref ulong newTs);
         void Start();
         void Cancel();
     }

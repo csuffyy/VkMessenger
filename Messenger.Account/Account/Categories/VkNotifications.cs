@@ -43,7 +43,7 @@ namespace VkData.Account.Categories
 
         public bool IsStarted { get; private set; }
 
-        public void WaitForUpdates(LongPollServerResponse response, ref ulong newTs)
+        public void TrackUpdates(LongPollServerResponse response, ref ulong newTs)
         {
             if (response == null)
             {
@@ -56,8 +56,29 @@ namespace VkData.Account.Categories
             if (jObject.Count == 0) return;
             newTs = Convert.ToUInt64(jObject.GetValue("ts"));
             var parseResult = ParseJObject(jObject);
-            var updates = parseResult.OfType<KeyValuePair<string, Dialog<Message>>>().ToList();
-            UpdateCaches(updates);
+            var updates = parseResult.
+                OfType<KeyValuePair<string, Dialog<Message>>>().
+                ToList();
+
+            UpdateCaches(Distinct(updates));
+        }
+
+        private Dictionary<string, Dialog<Message>> Distinct(List<KeyValuePair<string, Dialog<Message>>> updates)
+        {
+            var distinct = new Dictionary<string, Dialog<Message>>();
+            foreach (var item in updates)
+            {
+                if (Account.Storage.History.ContainsKey(item.Key))
+                {
+                    if (item.Value.Offsets[0].Value[0].Id
+                        == Account.Storage.History[item.Key].Offsets[0].Value[0].Id)
+                    {
+                        continue;
+                    }
+                }
+                distinct.Add(item.Key, item.Value);
+            }
+            return distinct;
         }
 
         public void Start()
@@ -71,7 +92,7 @@ namespace VkData.Account.Categories
                     IsStarted = true;
                     do
                     {
-                        WaitForUpdates(Account.LongPollServer, ref NewTs);
+                        TrackUpdates(Account.LongPollServer, ref NewTs);
                     } while (!Account.CancellationTokenSource.Token.IsCancellationRequested);
                     Account.Logger.Log("Updates stopped");
                 },

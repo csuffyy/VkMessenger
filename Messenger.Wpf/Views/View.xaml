@@ -73,7 +73,7 @@ BeginTime="0:0:0"                                             AutoReverse="True"
        
       
         </materialDesign:ColorZone>
-      <Menu Height="22" >
+      <Menu Height="30" >
                 <!--       <MenuItem
                 Foreground="White"
               FontSize="12"

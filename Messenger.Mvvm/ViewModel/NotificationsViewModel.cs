@@ -10,12 +10,9 @@ namespace MvvmService.ViewModel
 {
     public class NotificationsViewModel : ViewModelBase
     {
-        private readonly SoundPlayer Player;
 
         public NotificationsViewModel(IVkAccount account, IServiceLocator ioc)
-        {
-            Player = new SoundPlayer(account.AppSettings.NotificationSoundPath);
-            Player.LoadAsync();
+        { 
 
             var doAdd =
                 Application.Current.Dispatcher.Invoke(ioc.GetInstance<INotificationProvider<MessageViewModel>>).Add;
@@ -24,7 +21,6 @@ namespace MvvmService.ViewModel
                 new VkNotificationService(account, vm =>
                 {
                     doAdd(vm);
-                    Player.Play();
                 }, true);
             Service.StartTracking();
         }
