@@ -96,12 +96,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <command:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ShowPhotoInViewer}" CommandParameter="{Binding}" />
-
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
+                                               
                                                 <Image
                                                   Margin="2 2 2 0"
                                                   Source="{Binding}">

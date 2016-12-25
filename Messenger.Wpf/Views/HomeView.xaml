@@ -13,6 +13,7 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
+        
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
@@ -54,7 +55,7 @@
                     Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
-        <ResourceDictionary x:Key="MD">
+        <ResourceDictionary x:Key="Dictionary">
             <ResourceDictionary.MergedDictionaries>
              
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -171,12 +172,17 @@
                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
                 PaneBackground="#FF444444">
                 <!--  Items  -->
+                <controls:HamburgerMenu.Resources>
+              
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+
+                </controls:HamburgerMenu.Resources>
                 <controls:HamburgerMenu.ItemsSource>
                     <controls:HamburgerMenuItemCollection>
                         <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/search.png" Label="Big four summer heat" />
                         <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/person.png" Label="Bison badlands Chillin" />
                         <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/wechat.png" Label="Giant slab in Oregon" />
-                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/keyboard-backspace.png" Label="Lake Ann Mushroom" />
+                        <controls:HamburgerMenuGlyphItem Glyph="../Views/Assets/settings.png" Label="Lake Ann Mushroom" />
                     </controls:HamburgerMenuItemCollection>
                 </controls:HamburgerMenu.ItemsSource>
 
