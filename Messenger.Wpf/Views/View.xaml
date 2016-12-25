@@ -71,7 +71,9 @@ BeginTime="0:0:0"                                             AutoReverse="True"
             Background="#FF444444"
             >
        
-            <Menu Height="22" >
+      
+        </materialDesign:ColorZone>
+      <Menu Height="22" >
                 <!--       <MenuItem
                 Foreground="White"
               FontSize="12"
@@ -101,9 +103,6 @@ BeginTime="0:0:0"                                             AutoReverse="True"
                     Header="Clear cache" />
                 </MenuItem>-->
             </Menu>
-        </materialDesign:ColorZone>
->>>>>>> Stashed changes
-
         <ContentControl Margin="0,25,0,0" Content="{Binding ChildViewModel}" />
 
         <materialDesign:DialogHost Grid.Row="0" IsOpen="{Binding IsOpenDialog}">
