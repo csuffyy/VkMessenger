@@ -62,27 +62,7 @@ BeginTime="0:0:0"                                             AutoReverse="True"
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-<<<<<<< Updated upstream
-        <Menu>
-            <MenuItem
-                Width="Auto"
-                Height="22"
-                Header="Account">
-                <MenuItem
-                    Command="{Binding LogOutCommand}"
-                    Header="Log out"
-                    Visibility="{Binding Authorised, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            </MenuItem>
-            <MenuItem Height="22" Header="Settings">
-                <MenuItem
-                    Width="Auto"
-                    Height="22"
-                    Command="{Binding ClearCache}"
-                    Header="Clear cache" />
-            </MenuItem>
-        </Menu>
 
-=======
         <materialDesign:ColorZone 
             Panel.ZIndex="100"
             Height="18"
